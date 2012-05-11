@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Expediente Clinico</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">  
+
+
+            <p:layoutUnit position="south" size="28" resizable="false" closable="false" collapsible="false">  
+                <h:outputText style="font-size: smaller" value="Hecho por Alberto Emmanuel Esquivel Vega 02/05/2012." />  
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
+                <h:form>  
+                    <h:panelGrid columns="1">
+                        <h:commandLink value="Alta paciente"  action="expediente"/>
+<h:commandLink value="Citas" action="citas"/>
+                    </h:panelGrid>
+                </h:form>  
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="center">
+
+                <h:commandButton value="Imprimir">
+                    <p:printer target="zona"/>
+                </h:commandButton>
+                <h:form id="zona">
+                    <center>
+                        <h:graphicImage width="100px" height="100px" url="./imagenes/LogoMejorPersona.png"/>
+                        <br></br>
+                        <h:outputText value="Expediente Clinico" style="font-size:larger;font-weight: bold"/>
+                    </center>
+
+                    <p:panel style="font-size: smaller">
+                        <h:panelGrid columns="2">
+                            <h:outputText style="font-weight: bold" value="Nombre:"/>
+                            <h:outputText style="text-decoration: underline" value="Perengano Lopez"/>
+                            <h:outputText style="font-weight: bold" value="Direccion:"/>
+                            <h:outputText style="text-decoration: underline" value="Consultores Quants"/>
+                            <h:outputText style="font-weight: bold" value="Telefono:"/>
+                            <h:outputText style="text-decoration: underline" value="12345678"/>
+                            <h:outputText style="font-weight: bold" value="Celular:"/>
+                            <h:outputText style="text-decoration: underline" value="04455"/>
+                        </h:panelGrid>
+                    </p:panel>
+                    
+                    <p:panel style="font-size: smaller">
+                        <h:panelGrid width="50%" columns="2">
+                            <h:outputText style="font-weight: bold" value="Edad de comienzo de la obesidad"/>
+                            <h:outputText style="text-decoration: underline" value="10"/>
+                            <h:outputText style="font-weight: bold" value="Probable evento disparador de la obesidad:"/>
+                            <h:outputText style="text-decoration: underline" value="Comia mucho"/>
+                            <h:outputText style="font-weight: bold" value="Tratamientos previos:"/>
+                            <h:outputText style="text-decoration: underline" value="ABCDEFGHIJKLMNOPQRSQWEKSJKDOEURNKOSHFMSLSPHNDSMSLS;ERUR"/>
+                            <h:outputText style="font-weight: bold" value="Toma algun medicamento actualmente"/>
+                            <h:outputText style="text-decoration: underline" value="Aspirinas"/>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </p:layoutUnit>  
+
+        </p:layout>  
+    </h:body>
+</html>

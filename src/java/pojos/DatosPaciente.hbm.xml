@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 9/05/2012 07:19:28 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="pojos.DatosPaciente" table="datos_paciente" catalog="mejorpersona">
+        <id name="idPaciente" type="java.lang.Integer">
+            <column name="IdPaciente" />
+            <generator class="identity" />
+        </id>
+        <property name="apePat" type="string">
+            <column name="ApePat" />
+        </property>
+        <property name="apeMat" type="string">
+            <column name="ApeMat" />
+        </property>
+        <property name="nom" type="string">
+            <column name="Nom" />
+        </property>
+        <property name="segNom" type="string">
+            <column name="SegNom" />
+        </property>
+        <property name="tel" type="string">
+            <column name="Tel" />
+        </property>
+        <property name="cel" type="string">
+            <column name="Cel" />
+        </property>
+        <property name="domicilio" type="string">
+            <column name="Domicilio" />
+        </property>
+        <property name="correo" type="string">
+            <column name="Correo" />
+        </property>
+        <set name="expedienteDatoses" inverse="true">
+            <key>
+                <column name="IdPaciente" />
+            </key>
+            <one-to-many class="pojos.ExpedienteDatos" />
+        </set>
+        <set name="consultas" inverse="true">
+            <key>
+                <column name="IdPaciente" />
+            </key>
+            <one-to-many class="pojos.Consulta" />
+        </set>
+        <set name="expedienteMatrizs" inverse="true">
+            <key>
+                <column name="IdPaciente" />
+            </key>
+            <one-to-many class="pojos.ExpedienteMatriz" />
+        </set>
+        <set name="citas" inverse="true">
+            <key>
+                <column name="IdPaciente" />
+            </key>
+            <one-to-many class="pojos.Cita" />
+        </set>
+        <set name="expedienteComidases" inverse="true">
+            <key>
+                <column name="IdPaciente" />
+            </key>
+            <one-to-many class="pojos.ExpedienteComidas" />
+        </set>
+    </class>
+</hibernate-mapping>

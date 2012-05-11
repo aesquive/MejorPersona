@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+
+
+    <managed-bean>
+        <managed-bean-name>expedienteBean</managed-bean-name>
+        <managed-bean-class>beans.expedientes.ExpedienteBean</managed-bean-class>
+    
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>vistaExpedienteBean</managed-bean-name>
+        <managed-bean-class>beans.expedientes.VistaExpedienteBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>agendaBean</managed-bean-name>
+        <managed-bean-class>beans.citas.AgendaBean</managed-bean-class>
+    
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>loginBean</managed-bean-name>
+        <managed-bean-class>beans.login.LoginBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicial</from-outcome>
+            <to-view-id>/paginas/inicial.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <managed-bean>
+        <managed-bean-name>citasBean</managed-bean-name>
+        <managed-bean-class>beans.citas.CitasBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+</faces-config>

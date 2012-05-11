@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 9/05/2012 07:19:28 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="pojos.ExpedienteComidas" table="expediente_comidas" catalog="mejorpersona">
+        <id name="idComidas" type="java.lang.Integer">
+            <column name="IdComidas" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="datosPaciente" class="pojos.DatosPaciente" fetch="select">
+            <column name="IdPaciente" />
+        </many-to-one>
+        <property name="desDesayuno" type="string">
+            <column name="DesDesayuno" />
+        </property>
+        <property name="lugDesayuno" type="string">
+            <column name="LugDesayuno" />
+        </property>
+        <property name="comeSoloDesayuno" type="string">
+            <column name="ComeSoloDesayuno" />
+        </property>
+        <property name="horaDesayuno" type="time">
+            <column name="HoraDesayuno" length="8" />
+        </property>
+        <property name="desComida" type="string">
+            <column name="DesComida" />
+        </property>
+        <property name="lugComida" type="string">
+            <column name="LugComida" />
+        </property>
+        <property name="comeSoloComida" type="string">
+            <column name="ComeSoloComida" />
+        </property>
+        <property name="horaComida" type="time">
+            <column name="HoraComida" length="8" />
+        </property>
+        <property name="desCena" type="string">
+            <column name="DesCena" />
+        </property>
+        <property name="lugCena" type="string">
+            <column name="LugCena" />
+        </property>
+        <property name="comeSoloCena" type="string">
+            <column name="ComeSoloCena" />
+        </property>
+        <property name="horaCena" type="time">
+            <column name="HoraCena" length="8" />
+        </property>
+    </class>
+</hibernate-mapping>

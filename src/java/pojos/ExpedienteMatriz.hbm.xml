@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 9/05/2012 07:19:28 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="pojos.ExpedienteMatriz" table="expediente_matriz" catalog="mejorpersona">
+        <id name="idMatriz" type="java.lang.Integer">
+            <column name="IdMatriz" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="datosPaciente" class="pojos.DatosPaciente" fetch="select">
+            <column name="IdPaciente" />
+        </many-to-one>
+        <property name="obeMama" type="string">
+            <column name="ObeMama" />
+        </property>
+        <property name="obePapa" type="string">
+            <column name="ObePapa" />
+        </property>
+        <property name="obePac" type="string">
+            <column name="ObePac" />
+        </property>
+        <property name="diaMama" type="string">
+            <column name="DiaMama" />
+        </property>
+        <property name="diaPapa" type="string">
+            <column name="DiaPapa" />
+        </property>
+        <property name="diaPac" type="string">
+            <column name="DiaPac" />
+        </property>
+        <property name="hipMama" type="string">
+            <column name="HipMama" />
+        </property>
+        <property name="hipPapa" type="string">
+            <column name="HipPapa" />
+        </property>
+        <property name="hipPac" type="string">
+            <column name="HipPac" />
+        </property>
+        <property name="triMama" type="string">
+            <column name="TriMama" />
+        </property>
+        <property name="triPapa" type="string">
+            <column name="TriPapa" />
+        </property>
+        <property name="triPac" type="string">
+            <column name="TriPac" />
+        </property>
+        <property name="colMama" type="string">
+            <column name="ColMama" />
+        </property>
+        <property name="colPapa" type="string">
+            <column name="ColPapa" />
+        </property>
+        <property name="colPac" type="string">
+            <column name="ColPac" />
+        </property>
+        <property name="aleMama" type="string">
+            <column name="AleMama" />
+        </property>
+        <property name="alePapa" type="string">
+            <column name="AlePapa" />
+        </property>
+        <property name="alePac" type="string">
+            <column name="AlePac" />
+        </property>
+        <property name="tabMama" type="string">
+            <column name="TabMama" />
+        </property>
+        <property name="tabPapa" type="string">
+            <column name="TabPapa" />
+        </property>
+        <property name="tabPac" type="string">
+            <column name="TabPac" />
+        </property>
+        <property name="alcMama" type="string">
+            <column name="AlcMama" />
+        </property>
+        <property name="alcPapa" type="string">
+            <column name="AlcPapa" />
+        </property>
+        <property name="alcPac" type="string">
+            <column name="AlcPac" />
+        </property>
+        <property name="mensMama" type="string">
+            <column name="MensMama" />
+        </property>
+        <property name="mensPapa" type="string">
+            <column name="MensPapa" />
+        </property>
+        <property name="mensPac" type="string">
+            <column name="MensPac" />
+        </property>
+        <property name="cardMama" type="string">
+            <column name="CardMama" />
+        </property>
+        <property name="cardPapa" type="string">
+            <column name="CardPapa" />
+        </property>
+        <property name="cardPac" type="string">
+            <column name="CardPac" />
+        </property>
+        <property name="estrePac" type="string">
+            <column name="EstrePac" />
+        </property>
+        <property name="retLiqPac" type="string">
+            <column name="RetLiqPac" />
+        </property>
+        <property name="varPac" type="string">
+            <column name="VarPac" />
+        </property>
+    </class>
+</hibernate-mapping>

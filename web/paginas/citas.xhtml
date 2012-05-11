@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">  
+
+
+            <p:layoutUnit position="south" size="28" resizable="false" closable="false" collapsible="false">  
+                <h:outputText style="font-size: smaller" value="Hecho por Alberto Emmanuel Esquivel Vega 02/05/2012." />  
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
+                <h:form>  
+                    <h:panelGrid columns="1">
+                        <h:commandLink value="Alta paciente"  action="expediente"/>
+                        <h:commandLink value="Citas" action="citas"/>
+                    </h:panelGrid>
+                </h:form>  
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="center">
+
+
+                <p:schedule id="sche"  style="position: absolute; left: 0% ;width: 70%;height: 50%" value="#{agendaBean.agenda}"/>
+
+
+                    <h:panelGrid columns="2" style="position: absolute;right: 10%; top: 10%">
+                        <h:commandButton type="button" style="width: 40px;height: 40px" onclick="dlg.show();" image="./imagenes/add.png" value="BOTON"/>
+                        <h:outputText value="Alta" />
+                    </h:panelGrid>
+
+
+            </p:layoutUnit>  
+
+        </p:layout>  
+
+        <p:dialog header="Agendar Cita" widgetVar="dlg" showEffect="puff" resizable="false" hideEffect="puff" >  
+            
+            <h:form>
+            <h:panelGrid columns="2">
+                <h:outputText value="Paciente:"/>
+                <p:selectOneMenu value="#{citasBean.seleccionado}">
+                    <f:selectItem itemValue="#{null}" itemLabel="Seleccionar un Paciente"/>
+                    <f:selectItems value="#{citasBean.pacientes}" var="paciente" itemLabel="#{paciente.apePat} #{paciente.nom}" itemValue="#{paciente}"/>
+                </p:selectOneMenu>
+                
+                <h:outputText value="Inicio:"/>
+                <p:calendar value="#{citasBean.fechaInicial}" pattern="dd/MM/yyyy HH:mm"/>
+                
+                <h:outputText value="Fin:"/>
+                <p:calendar value="#{citasBean.fechaFinal}" pattern="dd/MM/yyyy HH:mm"/>
+                
+                <h:outputText value="Comentarios"/>
+                
+            </h:panelGrid>
+            
+            <p:inputTextarea value="#{citasBean.comentarios}"/>
+            
+                <h:commandButton value="Guardar" action="#{citasBean.guardar}"/>
+            </h:form>
+        </p:dialog>  
+
+    </h:body>
+</html>

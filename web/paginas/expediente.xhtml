@@ -1,0 +1,411 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">  
+
+
+            <p:layoutUnit position="south" size="28"  resizable="false" closable="false" collapsible="false">  
+                <h:outputText style="font-size: smaller" value="Hecho por Alberto Emmanuel Esquivel Vega 02/05/2012." />  
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
+                <h:form>  
+                    <h:panelGrid columns="1">
+                        <h:commandLink value="Alta paciente" />
+<h:commandLink value="Citas" action="citas"/>
+                    </h:panelGrid>
+                </h:form>  
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="center">  
+                <h:form>    
+                    <center>
+                        <h:panelGrid columns="3">
+                            <h:graphicImage width="50px" dir="LTR" height="50px" url="./imagenes/LogoMejorPersonaSinRefl.png"/>
+                            <h:outputText value="Expediente Clinico"/>
+                            <h:graphicImage width="50px" height="50px" url="./imagenes/LogoMejorPersonaSin.png"/>
+                        </h:panelGrid>
+                    </center>
+                    <p:tabView widgetVar="wiz" >
+
+                        <p:tab id="i1" title="Datos Personales">
+                            <p:panel header="Datos Personales">    
+                                <h:panelGrid columns="2">
+                                    <p:column>
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Apellido Paterno"/>
+                                            <p:inputText  value="#{expedienteBean.datosPaciente.apePat}"/>
+                                            <h:outputText value="Apellido Materno"/>
+                                            <p:inputText  value="#{expedienteBean.datosPaciente.apeMat}"/>
+                                            <h:outputText value="Nombre"/>
+                                            <p:inputText  value="#{expedienteBean.datosPaciente.nom}"/>
+                                            <h:outputText value="Segundo Nombre"/>
+                                            <p:inputText  value="#{expedienteBean.datosPaciente.segNom}"/>
+
+                                        </h:panelGrid>
+
+                                    </p:column>
+                                    <p:column>
+                                        <h:panelGrid columns="2" >
+                                            <h:outputText value="Domicilio"/>
+                                            <p:inputTextarea cols="30" rows="5" autoResize="false" value="#{expedienteBean.datosPaciente.domicilio}"/>
+                                            <h:outputText value="Telefono"/>
+                                            <p:inputText value="#{expedienteBean.datosPaciente.tel}"/>
+                                            <h:outputText value="Celular"/>
+                                            <p:inputText  value="#{expedienteBean.datosPaciente.cel}"/>
+                                            <h:outputText value="E-mail"/>
+                                            <p:inputText  value="#{expedienteBean.datosPaciente.correo}"/>
+
+                                        </h:panelGrid>
+                                    </p:column>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Datos Expediente">
+                            <p:panel header="Datos Expediente">
+                                <h:panelGrid columns="2">
+                                    <p:column>
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Edad de comienzo de la obesidad"/>
+                                            <p:inputText value="#{expedienteBean.expedienteDatos.edaComObe}"/>
+                                            <h:outputText value="Evento disparador de la obesidad"/>
+                                            <p:inputText value="#{expedienteBean.expedienteDatos.evtDisObe}"/>
+                                        </h:panelGrid>
+                                    </p:column>
+                                    <p:column>
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Tratamientos Previos"/>
+                                            <p:inputTextarea cols="30" rows="5" autoResize="false" value="#{expedienteBean.expedienteDatos.tratPrev}"/>
+                                            <h:outputText value="Medicamento tomado actualmente"/>
+                                            <p:inputText value="#{expedienteBean.expedienteDatos.medAct}"/>
+                                        </h:panelGrid>
+                                    </p:column>
+                                </h:panelGrid>
+
+                                <p:separator/>
+                                <h:panelGrid columns="3">
+                                    <h:outputText value="Peso Inicial"/>
+                                    <p:inputText value="#{expedienteBean.expedienteDatos.pesoInicial}"/>
+                                    <h:outputText value="Kg"/>
+                                    <h:outputText value="Talla"/>
+                                    <p:inputText value="#{expedienteBean.expedienteDatos.talla}"/>
+                                    <h:outputText value="m"/>
+                                    <h:outputText value="Estructura Osea"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteDatos.estructuraOsea}">
+                                        <f:selectItem itemLabel="Chica" itemValue="Chica"/>
+                                        <f:selectItem itemLabel="Mediana" itemValue="Mediana"/>
+                                        <f:selectItem itemLabel="Grande" itemValue="Grande"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value=" "/>
+                                    <h:outputText value="Peso Ideal"/>
+                                    <p:inputText value="#{expedienteBean.expedienteDatos.pesoIdeal}"/>
+                                    <h:outputText value="Kg"/>
+                                </h:panelGrid>
+
+                                <p:separator/>
+                                <h:panelGrid columns="3">
+                                    <h:outputText value="Cadera"/>
+                                    <p:inputText value="#{expedienteBean.expedienteDatos.cadera}"/>
+                                    <h:outputText value="cm"/>
+                                    <h:outputText value="Cintura"/>
+                                    <p:inputText value="#{expedienteBean.expedienteDatos.cintura}"/>
+                                    <h:outputText value="cm"/>
+                                    <h:outputText value="Pecho"/>
+                                    <p:inputText value="#{expedienteBean.expedienteDatos.busto}"/>
+                                    <h:outputText value="cm"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Padecimientos">
+                            <p:panel header="Padecimientos">
+                                <h:panelGrid columns="4" border="2" width="100%" rules="all" style="margin: 10px">
+                                    <h:outputText style="font-weight: bold" value="Padecimiento"/>
+                                    <h:outputText style="font-weight: bold" value="Mama"/>
+                                    <h:outputText style="font-weight: bold" value="Papa"/>
+                                    <h:outputText style="font-weight: bold" value="Paciente"/>
+                                    <h:outputText value="Obesidad"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.obeMama}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.obePapa}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.obePac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Diabetes"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.diaMama}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.diaPapa}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.diaPac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Hipertension"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.hipMama}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.hipPapa}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.hipPac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Trigliceridos"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.triMama}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.triPapa}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.triPac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Colesterol"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.colMama}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.colPapa}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.colPac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+
+
+                                    <h:outputText value="Alergias"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.aleMama}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.alePapa}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.alePac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+
+
+                                    <h:outputText value="Tabaquismo"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.tabMama}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.tabPapa}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.tabPac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+
+
+
+                                    <h:outputText value="Alcoholismo"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.alcMama}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.alcPapa}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.alcPac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+
+
+                                    <h:outputText value="Transtornos Menstruales"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.mensMama}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.mensPapa}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.mensPac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+
+
+                                    <h:outputText value="Problemas Cardiacos"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.cardMama}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.cardPapa}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.cardPac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+
+                                </h:panelGrid>
+
+                                <p:separator/>
+
+                                <h:panelGrid columns="2" border="2" width="50%" rules="all" style="margin: 10px">
+                                    <h:outputText style="font-weight: bold" value="Padecimiento"/>
+                                    <h:outputText style="font-weight: bold" value="Paciente"/>
+                                    <h:outputText value="Estrenimiento"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.estrePac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <h:panelGrid columns="1">
+                                    <h:outputText value="Retencion de Liquidos"/>
+                                    <h:outputText value="Edema de miembros Inferiores"/>    
+                                    </h:panelGrid>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.retLiqPac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Varices"/>
+                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.varPac}">
+                                        <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                        <f:selectItem itemLabel="No" itemValue="No"/>
+                                    </p:selectOneMenu>
+                                    
+
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Datos Comidas">
+                            <p:panel header="Datos Comidas">
+                                <h:outputText value="Desayuno"/>
+
+                                <h:panelGrid columns="2">
+                                    <p:column>
+                                        <p:inputTextarea autoResize="false" cols="30" rows="5" value="#{expedienteBean.expedienteComidas.desDesayuno}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Lugar"/>
+                                            <p:inputText value="#{expedienteBean.expedienteComidas.lugDesayuno}"/>
+                                            <h:outputText value="Come Solo : "/>
+                                            <p:selectOneMenu value="#{expedienteBean.expedienteComidas.comeSoloDesayuno}">
+                                                <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                                <f:selectItem itemLabel="No" itemValue="No"/>
+                                            </p:selectOneMenu>
+                                            <h:outputText value="Hora "/>
+                                            <h:panelGrid columns="4">
+                                                <p:spinner min="1" max="24" stepFactor="1" value="#{expedienteBean.hrsDesayuno}"/>
+                                                <h:outputText value="hrs"/>
+                                                <p:spinner min="0" max="59" stepFactor="1" value="#{expedienteBean.minsDesayuno}"/>
+                                                <h:outputText value="mins"/>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </p:column>
+                                </h:panelGrid>
+
+                                <p:separator/>
+
+                                <h:outputText value="Comida"/>
+
+                                <h:panelGrid columns="2">
+                                    <p:column>
+                                        <p:inputTextarea autoResize="false" cols="30" rows="5" value="#{expedienteBean.expedienteComidas.desComida}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Lugar"/>
+                                            <p:inputText value="#{expedienteBean.expedienteComidas.lugComida}"/>
+                                            <h:outputText value="Come Solo : "/>
+                                            <p:selectOneMenu value="#{expedienteBean.expedienteComidas.comeSoloComida}">
+                                                <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                                <f:selectItem itemLabel="No" itemValue="No"/>
+                                            </p:selectOneMenu>
+                                            <h:outputText value="Hora "/>
+                                            <h:panelGrid columns="4">
+                                                <p:spinner min="1" max="24" stepFactor="1" value="#{expedienteBean.hrsComida}"/>
+                                                <h:outputText value="hrs"/>
+                                                <p:spinner min="0" max="59" stepFactor="1" value="#{expedienteBean.minsComida}"/>
+                                                <h:outputText value="mins"/>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </p:column>
+                                </h:panelGrid>
+
+                                <p:separator/>
+
+                                <h:outputText value="Cena"/>
+
+                                <h:panelGrid columns="2">
+                                    <p:column>
+                                        <p:inputTextarea autoResize="false" cols="30" rows="5" value="#{expedienteBean.expedienteComidas.desCena}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <h:panelGrid columns="2">
+                                            <h:outputText value="Lugar"/>
+                                            <p:inputText value="#{expedienteBean.expedienteComidas.lugCena}"/>
+                                            <h:outputText value="Come Solo : "/>
+                                            <p:selectOneMenu value="#{expedienteBean.expedienteComidas.comeSoloCena}">
+                                                <f:selectItem itemLabel="Si" itemValue="Si"/>
+                                                <f:selectItem itemLabel="No" itemValue="No"/>
+                                            </p:selectOneMenu>
+                                            <h:outputText value="Hora "/>
+                                            <h:panelGrid columns="4">
+                                                <p:spinner min="1" max="24" stepFactor="1" value="#{expedienteBean.hrsCena}"/>
+                                                <h:outputText value="hrs"/>
+                                                <p:spinner min="0" max="59" stepFactor="1" value="#{expedienteBean.minsCena}"/>
+                                                <h:outputText value="mins"/>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </p:column>
+                                </h:panelGrid>
+
+
+                            </p:panel>
+                        </p:tab>
+
+
+                        <p:tab title="Guardar">
+                            <center>
+                                <h:commandButton action="#{expedienteBean.guardar}" value="Guardar Expediente"/>
+                            </center>
+                        </p:tab>
+
+
+                    </p:tabView>
+                </h:form>
+            </p:layoutUnit>  
+
+        </p:layout>  
+    </h:body>
+</html>

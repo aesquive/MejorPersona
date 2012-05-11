@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 9/05/2012 07:19:28 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="pojos.DatosDoctor" table="datos_doctor" catalog="mejorpersona">
+        <id name="idDoctor" type="java.lang.Integer">
+            <column name="IdDoctor" />
+            <generator class="identity" />
+        </id>
+        <property name="apePat" type="string">
+            <column name="ApePat" />
+        </property>
+        <property name="apeMat" type="string">
+            <column name="ApeMat" />
+        </property>
+        <property name="nom" type="string">
+            <column name="Nom" />
+        </property>
+        <property name="segNom" type="string">
+            <column name="SegNom" />
+        </property>
+        <property name="usu" type="string">
+            <column name="Usu" />
+        </property>
+        <property name="pas" type="string">
+            <column name="Pas" />
+        </property>
+        <set name="consultas" inverse="true">
+            <key>
+                <column name="IdDoctor" />
+            </key>
+            <one-to-many class="pojos.Consulta" />
+        </set>
+        <set name="citas" inverse="true">
+            <key>
+                <column name="IdDoctor" />
+            </key>
+            <one-to-many class="pojos.Cita" />
+        </set>
+    </class>
+</hibernate-mapping>

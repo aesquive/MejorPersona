@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 9/05/2012 07:19:28 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="pojos.ExpedienteDatos" table="expediente_datos" catalog="mejorpersona">
+        <id name="idExpediente" type="java.lang.Integer">
+            <column name="IdExpediente" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="datosPaciente" class="pojos.DatosPaciente" fetch="select">
+            <column name="IdPaciente" />
+        </many-to-one>
+        <property name="edaComObe" type="java.lang.Integer">
+            <column name="EdaComObe" />
+        </property>
+        <property name="evtDisObe" type="string">
+            <column name="EvtDisObe" />
+        </property>
+        <property name="tratPrev" type="string">
+            <column name="TratPrev" />
+        </property>
+        <property name="medAct" type="string">
+            <column name="MedAct" />
+        </property>
+        <property name="pesoInicial" type="java.lang.Double">
+            <column name="PesoInicial" precision="6" scale="3" />
+        </property>
+        <property name="talla" type="java.lang.Double">
+            <column name="Talla" precision="6" scale="3" />
+        </property>
+        <property name="estructuraOsea" type="string">
+            <column name="EstructuraOsea" />
+        </property>
+        <property name="pesoIdeal" type="java.lang.Double">
+            <column name="PesoIdeal" precision="6" scale="3" />
+        </property>
+        <property name="cadera" type="java.lang.Double">
+            <column name="Cadera" precision="5" />
+        </property>
+        <property name="cintura" type="java.lang.Double">
+            <column name="Cintura" precision="5" />
+        </property>
+        <property name="busto" type="java.lang.Double">
+            <column name="Busto" precision="5" />
+        </property>
+    </class>
+</hibernate-mapping>

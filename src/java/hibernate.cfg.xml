@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mejorpersona</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password"/>
+    <mapping resource="pojos/Consulta.hbm.xml"/>
+    <mapping resource="pojos/ExpedienteComidas.hbm.xml"/>
+    <mapping resource="pojos/ExpedienteMatriz.hbm.xml"/>
+    <mapping resource="pojos/DatosPaciente.hbm.xml"/>
+    <mapping resource="pojos/ExpedienteDatos.hbm.xml"/>
+    <mapping resource="pojos/DatosDoctor.hbm.xml"/>
+    <mapping resource="pojos/Cita.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>
