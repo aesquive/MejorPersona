@@ -2,11 +2,12 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="mejorpersona"/>
+  <table-filter match-name="expediente_comidas"/>
+  <table-filter match-name="datos_doctor"/>
   <table-filter match-name="consulta"/>
+  <table-filter match-name="datos_paciente"/>
+  <table-filter match-name="configuracion"/>
+  <table-filter match-name="expediente_datos"/>
   <table-filter match-name="cita"/>
   <table-filter match-name="expediente_matriz"/>
-  <table-filter match-name="expediente_datos"/>
-  <table-filter match-name="datos_doctor"/>
-  <table-filter match-name="expediente_comidas"/>
-  <table-filter match-name="datos_paciente"/>
 </hibernate-reverse-engineering>

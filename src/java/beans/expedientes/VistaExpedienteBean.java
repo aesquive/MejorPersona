@@ -8,28 +8,30 @@ import beans.Bean;
  */
 public class VistaExpedienteBean extends Bean{
 
-    private ExpedienteBean expedienteBean;
-    
-    public VistaExpedienteBean() {
-        expedienteBean=new ExpedienteBean();
+    private String ruta;
+
+    public VistaExpedienteBean(){
+        ruta="Expos";
+        
     }
     
-    public VistaExpedienteBean(ExpedienteBean expedienteBean)
-    {
-        this.expedienteBean=expedienteBean;
+    public VistaExpedienteBean(String ruta){
+        this.ruta=ruta;
+    }
+    
+    /**
+     * @return the ruta
+     */
+    public String getRuta() {
+        return ruta;
     }
 
     /**
-     * @return the expedienteBean
+     * @param ruta the ruta to set
      */
-    public ExpedienteBean getExpedienteBean() {
-        return expedienteBean;
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
-
-    /**
-     * @param expedienteBean the expedienteBean to set
-     */
-    public void setExpedienteBean(ExpedienteBean expedienteBean) {
-        this.expedienteBean = expedienteBean;
-    }
+    
+    
 }

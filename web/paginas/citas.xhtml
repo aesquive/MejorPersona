@@ -23,17 +23,35 @@
                     </h:panelGrid>
                 </h:form>  
             </p:layoutUnit>  
-
+            
             <p:layoutUnit position="center">
 
 
-                <p:schedule id="sche"  style="position: absolute; left: 0% ;width: 70%;height: 50%" value="#{agendaBean.agenda}"/>
+                <p:schedule id="sche" minTime="7" maxTime="22" showHeader="true"  allDaySlot="false"   resizable="false" view="agendaDay"  style="position: absolute; left: 0% ;width: 70%;height: 50%" value="#{agendaBean.agenda}">
 
+                    <p:ajax event="eventSelect" listener="#{agendaBean.seleccionEvento}" 
+                            update="cuaVer" oncomplete="dlgVer.show()"/>
 
-                    <h:panelGrid columns="2" style="position: absolute;right: 10%; top: 10%">
-                        <h:commandButton type="button" style="width: 40px;height: 40px" onclick="dlg.show();" image="./imagenes/add.png" value="BOTON"/>
-                        <h:outputText value="Alta" />
+                </p:schedule>
+
+                <p:dialog header="Ver Cita" widgetVar="dlgVer" showEffect="puff" resizable="false" hideEffect="puff" >  
+                    <h:panelGrid  id="cuaVer" columns="2">
+                        <h:outputText value="Paciente:"/>
+                        <h:outputText  value="#{agendaBean.eventoSeleccionado.title}"/>
+                        <h:outputText value="Inicio:"/>
+                        <p:calendar readonly="true" minHour="7" maxHour="22"  value="#{agendaBean.eventoSeleccionado.startDate}" pattern="dd/MM/yyyy HH:mm"/>
+                        <h:outputText value="Fin:"/>
+                        <p:calendar readonly="true" minHour="7" maxHour="22" value="#{agendaBean.eventoSeleccionado.endDate}" pattern="dd/MM/yyyy HH:mm"/>
+
                     </h:panelGrid>
+
+                </p:dialog>  
+
+
+                <h:panelGrid columns="2" style="position: absolute;right: 10%; top: 10%">
+                    <h:commandButton type="button" style="width: 40px;height: 40px" onclick="dlg.show();" image="./imagenes/add.png" value="BOTON"/>
+                    <h:outputText value="Alta" />
+                </h:panelGrid>
 
 
             </p:layoutUnit>  
@@ -41,30 +59,35 @@
         </p:layout>  
 
         <p:dialog header="Agendar Cita" widgetVar="dlg" showEffect="puff" resizable="false" hideEffect="puff" >  
-            
+
             <h:form>
-            <h:panelGrid columns="2">
-                <h:outputText value="Paciente:"/>
-                <p:selectOneMenu value="#{citasBean.seleccionado}">
-                    <f:selectItem itemValue="#{null}" itemLabel="Seleccionar un Paciente"/>
-                    <f:selectItems value="#{citasBean.pacientes}" var="paciente" itemLabel="#{paciente.apePat} #{paciente.nom}" itemValue="#{paciente}"/>
-                </p:selectOneMenu>
-                
-                <h:outputText value="Inicio:"/>
-                <p:calendar value="#{citasBean.fechaInicial}" pattern="dd/MM/yyyy HH:mm"/>
-                
-                <h:outputText value="Fin:"/>
-                <p:calendar value="#{citasBean.fechaFinal}" pattern="dd/MM/yyyy HH:mm"/>
-                
-                <h:outputText value="Comentarios"/>
-                
-            </h:panelGrid>
-            
-            <p:inputTextarea value="#{citasBean.comentarios}"/>
-            
+                <h:panelGrid columns="2">
+                    <h:outputText value="Paciente:"/>
+                    <p:selectOneMenu value="#{citasBean.idSeleccionado}">
+                        <f:selectItem itemValue="#{-1}" itemLabel="Seleccionar un Paciente"/>
+                        <f:selectItems value="#{citasBean.pacientes}" var="paciente" itemLabel="#{paciente.apePat} #{paciente.nom}"
+                                       itemValue="#{paciente.idPaciente}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Inicio:"/>
+                    <p:calendar minHour="7" maxHour="22"  value="#{citasBean.cita.fechaInicial}" pattern="dd/MM/yyyy HH:mm"/>
+
+                    <h:outputText value="Fin:"/>
+                    <p:calendar minHour="7" maxHour="22" value="#{citasBean.cita.fechaFinal}" pattern="dd/MM/yyyy HH:mm"/>
+
+                    <h:outputText value="Comentarios"/>
+
+                </h:panelGrid>
+
+                <p:inputTextarea value="#{citasBean.cita.desCita}"/>
+
                 <h:commandButton value="Guardar" action="#{citasBean.guardar}"/>
             </h:form>
         </p:dialog>  
+
+
+
+
 
     </h:body>
 </html>

@@ -11,6 +11,7 @@
     <mapping resource="pojos/ExpedienteComidas.hbm.xml"/>
     <mapping resource="pojos/ExpedienteMatriz.hbm.xml"/>
     <mapping resource="pojos/DatosPaciente.hbm.xml"/>
+    <mapping resource="pojos/Configuracion.hbm.xml"/>
     <mapping resource="pojos/ExpedienteDatos.hbm.xml"/>
     <mapping resource="pojos/DatosDoctor.hbm.xml"/>
     <mapping resource="pojos/Cita.hbm.xml"/>

@@ -7,12 +7,16 @@ package beans.citas;
 import base.Dao;
 import beans.Bean;
 import beans.login.LoginBean;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import javax.faces.event.ActionEvent;
+import mail.EnviadorCorreos;
+import org.hibernate.criterion.Restrictions;
 import pojos.Cita;
+import pojos.Configuracion;
 import pojos.DatosDoctor;
 import pojos.DatosPaciente;
+import util.Funciones;
 
 /**
  *
@@ -20,21 +24,18 @@ import pojos.DatosPaciente;
  */
 public class CitasBean {
 
-    
     private List<DatosPaciente> pacientes;
     private Dao dao;
-    private DatosPaciente seleccionado;
-    private Date fechaInicial;
-    private Date fechaFinal;
-    private String comentarios;
-    
+    private Cita cita;
+    private int idSeleccionado;
+
     /**
      * Creates a new instance of CitasBean
      */
     public CitasBean() {
-        dao=new Dao();
-        pacientes=dao.getTabla(DatosPaciente.class);
-        
+        dao = new Dao();
+        pacientes = dao.getTabla(DatosPaciente.class);
+        cita = new Cita();
     }
 
     /**
@@ -65,70 +66,80 @@ public class CitasBean {
         this.dao = dao;
     }
 
-    /**
-     * @return the seleccionado
-     */
-    public DatosPaciente getSeleccionado() {
-        return seleccionado;
-    }
-
-    /**
-     * @param seleccionado the seleccionado to set
-     */
-    public void setSeleccionado(DatosPaciente seleccionado) {
-        this.seleccionado = seleccionado;
-    }
-
-    /**
-     * @return the fechaInicial
-     */
-    public Date getFechaInicial() {
-        return fechaInicial;
-    }
-
-    /**
-     * @param fechaInicial the fechaInicial to set
-     */
-    public void setFechaInicial(Date fechaInicial) {
-        this.fechaInicial = fechaInicial;
-    }
-
-    /**
-     * @return the fechaFinal
-     */
-    public Date getFechaFinal() {
-        return fechaFinal;
-    }
-
-    /**
-     * @param fechaFinal the fechaFinal to set
-     */
-    public void setFechaFinal(Date fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
-
-    /**
-     * @return the comentarios
-     */
-    public String getComentarios() {
-        return comentarios;
-    }
-
-    /**
-     * @param comentarios the comentarios to set
-     */
-    public void setComentarios(String comentarios) {
-        this.comentarios = comentarios;
-    }
-
-    public String guardar(){
+    public String guardar() {
         System.out.println("guardando");
-        DatosDoctor datosDoctor = ((LoginBean)Bean.getBean("loginBean")).getDatosDoctor();
-        Cita cita=new Cita(datosDoctor, seleccionado, comentarios, fechaInicial, fechaFinal);
-        dao.guardarActualizar(cita);
+        System.out.println("el id =" + idSeleccionado);
+        System.out.println("la fecha inicio " + cita.getFechaInicial());
+        System.out.println("fecha final " + cita.getFechaFinal());
+        System.out.println("descr " + cita.getDesCita());
+        DatosDoctor datosDoctor = ((LoginBean) Bean.getBean("loginBean")).getDatosDoctor();
+        restarHoraCitas(1 , dao.getTabla(Cita.class));
+        guardarCita(datosDoctor);
         AgendaBean bean = (AgendaBean) Bean.getBean("agendaBean");
-        bean.agregarCita(cita);
-        System.out.println("acabe de guardar cita");
+        bean.agregarCita(dao.queryCriterion(Cita.class, Restrictions.eq("datosDoctor",datosDoctor)));
+        enviarCorreo();
         return "citas";
+    }
+
+    /**
+     * @return the cita
+     */
+    public Cita getCita() {
+        return cita;
+    }
+
+    /**
+     * @param cita the cita to set
+     */
+    public void setCita(Cita cita) {
+        this.cita = cita;
+    }
+
+    /**
+     * @return the idSeleccionado
+     */
+    public int getIdSeleccionado() {
+        return idSeleccionado;
+    }
+
+    /**
+     * @param idSeleccionado the idSeleccionado to set
+     */
+    public void setIdSeleccionado(int idSeleccionado) {
+        this.idSeleccionado = idSeleccionado;
+    }
+
+    private void guardarCita(DatosDoctor datosDoctor) {
+        cita.setDatosDoctor(datosDoctor);
+        cita.setDatosPaciente(dao.getPaciente(idSeleccionado));
+        dao.guardarActualizar(getCita());
+
+    }
+
+    private void restarHoraCitas(int horas, List<Cita> tabla) {
+        for(Cita c:tabla){
+            Date ini=c.getFechaInicial();
+            ini.setHours(ini.getHours()-horas);
+            Date fin=c.getFechaFinal();
+            fin.setHours(fin.getHours()-horas);
+            c.setFechaInicial(ini);
+            c.setFechaFinal(fin);
+            dao.guardarActualizar(c);
+        }
+    }
+
+    private void enviarCorreo() {
+        String[] mensaje=formarMensaje();
+        List<Configuracion> tabla = dao.getTabla(Configuracion.class);
+        Collections.sort(tabla);
+        EnviadorCorreos enviador=new EnviadorCorreos(tabla.get(0).getValor(), tabla.get(1).getValor(), tabla.get(2).getValor());
+        enviador.enviar(new String[]{cita.getDatosPaciente().getCorreo()},"CITA",mensaje);
+    }
+
+    private String[] formarMensaje() {
+        String saludo="Estimado(a) "+cita.getDatosPaciente().getNom()+" "+cita.getDatosPaciente().getApePat();
+        String cuerpo="Recordando su cita el dia "+Funciones.DateToString(cita.getFechaInicial())+" a las "+Funciones.sacarHorario(cita.getFechaInicial());
+        String despedida="Saludos";
+        return new String[]{saludo,cuerpo,despedida};
     }
 }

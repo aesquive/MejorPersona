@@ -72,10 +72,10 @@ public class Dao {
 //            System.out.println(dat);
 //        }
         
-        DatosPaciente paciente=new DatosPaciente();
-        paciente.setApePat("Garcia");
-        paciente.setApeMat("Garcia");
-        paciente.setNom("Javier");
-        dao.guardarActualizar(paciente);
+    
+    }
+
+    public DatosPaciente getPaciente(int idSeleccionado) {
+        return (DatosPaciente) sesion.createCriteria(DatosPaciente.class).add(Restrictions.eq("id", idSeleccionado)).uniqueResult();
     }
 }

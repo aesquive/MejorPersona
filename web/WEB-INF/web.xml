@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    
+    <!--
+    javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE
+    
+    See following URLS to explain why it might be of use:
+    
+    http://forum.primefaces.org/viewtopic.php?f=3&t=16701&start=10#p50972
+    http://forum.primefaces.org/viewtopic.php?f=3&t=16701#p50956
+    
+    f:convertDateTime displays wrong Date; BalusC responded/answered
+    http://stackoverflow.com/questions/2689245/fconvertdatetime-displays-wrong-date
+-->
+    
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>

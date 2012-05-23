@@ -7,10 +7,8 @@ package beans.citas;
 import base.Dao;
 import beans.Bean;
 import beans.login.LoginBean;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import org.primefaces.component.schedule.Schedule;
+import java.util.*;
+import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
@@ -26,9 +24,15 @@ public class AgendaBean extends Bean{
 
     private ScheduleModel agenda;
     private DatosDoctor datosDoctor;
+    private TimeZone timeZone;
+    private ScheduleEvent eventoSeleccionado;
     
     /** Creates a new instance of AgendaBean */
     public AgendaBean() {
+        eventoSeleccionado=new DefaultScheduleEvent();
+        
+        timeZone=TimeZone.getTimeZone("Mexico/General");
+        
         datosDoctor=((LoginBean)Bean.getBean("loginBean")).getDatosDoctor();
         List<ScheduleEvent> eventos = obtenerEventos(datosDoctor);
         agenda = new DefaultScheduleModel(eventos);
@@ -49,24 +53,72 @@ public class AgendaBean extends Bean{
     }
     
     public static void main(String[] args) {
-        Dao dao=new Dao();
-        DatosDoctor doc = (DatosDoctor) dao.getTabla(DatosDoctor.class).get(0);
-        AgendaBean cit=new AgendaBean();
-        List<ScheduleEvent> citas = cit.obtenerEventos(doc);
-        System.out.println(citas.size());
+        TimeZone zone=TimeZone.getTimeZone("Mexico/General");
+        System.out.println(zone);
     }
 
     private List<ScheduleEvent> obtenerEventos(DatosDoctor datosDoctor) {
         List<ScheduleEvent> lista=new LinkedList<ScheduleEvent>();
         Set<Cita> citas = datosDoctor.getCitas();
-        for(Cita cita:citas){
-            DefaultScheduleEvent evento=new DefaultScheduleEvent(cita.getDatosPaciente().getApePat()+" "+cita.getDatosPaciente().getNom()+"-"+cita.getDesCita(), cita.getFechaInicial(), cita.getFechaFinal(), false);
+        for(Cita original:citas){
+            Cita cita = original.clone();
+            Date ini=cita.getFechaInicial();
+            ini.setHours(ini.getHours()+1);
+            Date fin=cita.getFechaFinal();
+            fin.setHours(fin.getHours()+1);
+            DefaultScheduleEvent evento=new DefaultScheduleEvent(cita.getDatosPaciente().getApePat()+" "+cita.getDatosPaciente().getNom(), ini , fin, false);
             lista.add(evento);
         }
         return lista;
     }
 
-    public void agregarCita(Cita cita) {
-        agenda.addEvent(new DefaultScheduleEvent(cita.getDatosPaciente().getApePat()+" "+cita.getDatosPaciente().getNom()+"-"+cita.getDesCita(), cita.getFechaInicial(), cita.getFechaFinal(), false));
+    public void agregarCita(List<Cita> citas) {
+       List<ScheduleEvent> lista=new LinkedList<ScheduleEvent>();
+        for(Cita original:citas){
+            Cita cita = original.clone();
+            Date ini=cita.getFechaInicial();
+            ini.setHours(ini.getHours()+1);
+            Date fin=cita.getFechaFinal();
+            fin.setHours(fin.getHours()+1);
+            DefaultScheduleEvent evento=new DefaultScheduleEvent(cita.getDatosPaciente().getApePat()+" "+cita.getDatosPaciente().getNom(), ini , fin, false);
+            lista.add(evento);
+        }
+        agenda=new DefaultScheduleModel(lista);
+    }
+
+    public void seleccionEvento(ScheduleEntrySelectEvent event){
+        System.out.println("entro a ver el evento seleccion");
+        eventoSeleccionado=new DefaultScheduleEvent("Titulo", Calendar.getInstance().getTime()  ,Calendar.getInstance().getTime());
+        this.eventoSeleccionado=event.getScheduleEvent();
+        System.out.println("el evento es "+eventoSeleccionado);
+        System.out.println("tiene "+eventoSeleccionado.getTitle());
+    }
+    
+    /**
+     * @return the timeZone
+     */
+    public TimeZone getTimeZone() {
+        return timeZone;
+    }
+
+    /**
+     * @param timeZone the timeZone to set
+     */
+    public void setTimeZone(TimeZone timeZone) {
+        this.timeZone = timeZone;
+    }
+
+    /**
+     * @return the eventoSeleccionado
+     */
+    public ScheduleEvent getEventoSeleccionado() {
+        return eventoSeleccionado;
+    }
+
+    /**
+     * @param eventoSeleccionado the eventoSeleccionado to set
+     */
+    public void setEventoSeleccionado(ScheduleEvent eventoSeleccionado) {
+        this.eventoSeleccionado = eventoSeleccionado;
     }
 }

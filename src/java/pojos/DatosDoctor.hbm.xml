@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 9/05/2012 07:19:28 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 16/05/2012 07:53:47 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="pojos.DatosDoctor" table="datos_doctor" catalog="mejorpersona">
         <id name="idDoctor" type="java.lang.Integer">

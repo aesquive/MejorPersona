@@ -18,49 +18,15 @@
                 <h:form>  
                     <h:panelGrid columns="1">
                         <h:commandLink value="Alta paciente"  action="expediente"/>
-<h:commandLink value="Citas" action="citas"/>
+                        <h:commandLink value="Citas" action="citas"/>
                     </h:panelGrid>
                 </h:form>  
             </p:layoutUnit>  
 
             <p:layoutUnit position="center">
-
-                <h:commandButton value="Imprimir">
-                    <p:printer target="zona"/>
-                </h:commandButton>
-                <h:form id="zona">
-                    <center>
-                        <h:graphicImage width="100px" height="100px" url="./imagenes/LogoMejorPersona.png"/>
-                        <br></br>
-                        <h:outputText value="Expediente Clinico" style="font-size:larger;font-weight: bold"/>
-                    </center>
-
-                    <p:panel style="font-size: smaller">
-                        <h:panelGrid columns="2">
-                            <h:outputText style="font-weight: bold" value="Nombre:"/>
-                            <h:outputText style="text-decoration: underline" value="Perengano Lopez"/>
-                            <h:outputText style="font-weight: bold" value="Direccion:"/>
-                            <h:outputText style="text-decoration: underline" value="Consultores Quants"/>
-                            <h:outputText style="font-weight: bold" value="Telefono:"/>
-                            <h:outputText style="text-decoration: underline" value="12345678"/>
-                            <h:outputText style="font-weight: bold" value="Celular:"/>
-                            <h:outputText style="text-decoration: underline" value="04455"/>
-                        </h:panelGrid>
-                    </p:panel>
-                    
-                    <p:panel style="font-size: smaller">
-                        <h:panelGrid width="50%" columns="2">
-                            <h:outputText style="font-weight: bold" value="Edad de comienzo de la obesidad"/>
-                            <h:outputText style="text-decoration: underline" value="10"/>
-                            <h:outputText style="font-weight: bold" value="Probable evento disparador de la obesidad:"/>
-                            <h:outputText style="text-decoration: underline" value="Comia mucho"/>
-                            <h:outputText style="font-weight: bold" value="Tratamientos previos:"/>
-                            <h:outputText style="text-decoration: underline" value="ABCDEFGHIJKLMNOPQRSQWEKSJKDOEURNKOSHFMSLSPHNDSMSLS;ERUR"/>
-                            <h:outputText style="font-weight: bold" value="Toma algun medicamento actualmente"/>
-                            <h:outputText style="text-decoration: underline" value="Aspirinas"/>
-                        </h:panelGrid>
-                    </p:panel>
-                </h:form>
+                <center>
+                    <iframe src="../expedientes/#{vistaExpedienteBean.ruta}.pdf" width="98%" height="98%"/>
+                </center>
             </p:layoutUnit>  
 
         </p:layout>  
