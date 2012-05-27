@@ -6,29 +6,23 @@ package documentadores;
 
 import base.Dao;
 import com.itextpdf.text.*;
-import com.itextpdf.text.html.simpleparser.ImageStore;
-import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import pojos.DatosPaciente;
 import pojos.ExpedienteComidas;
 import pojos.ExpedienteDatos;
 import pojos.ExpedienteMatriz;
+import util.Funciones;
 
 /**
  *
@@ -61,7 +55,6 @@ public class GeneradorExpedientes {
         return idPaciente + ".pdf";
     }
 
-
     private Document generarDocumento() {
         try {
             document = new Document();
@@ -76,8 +69,39 @@ public class GeneradorExpedientes {
     }
 
     private void escribirArchivo() {
+        agregarDocumento(generarImagenEncabezado());
         agregarDocumento(generarEncabezado());
-        agregarDocumento(crearTabla(generarPropiedades(datosPaciente),new float[]{.3f, 2f}));
+        agregarDocumento(new Phrase(" "));
+        agregarDocumento(crearTabla(generarPropiedades(datosPaciente), new float[]{.3f, 2f}));
+        agregarDocumento(new Phrase(" "));
+        agregarDocumento(crearTabla(generarPropiedades(expedienteDatos), new float[]{2f, 2f}));
+        agregarDocumento(new Phrase(" "));
+        agregarDocumento(crearTabla(generarPropiedadesMedidas(expedienteDatos), new float[]{1f, 1f, 1f, 1f}));
+
+        agregarDocumento(Chunk.NEWLINE);
+        agregarComida("Desayuno :", expedienteComidas.getDesDesayuno(), expedienteComidas.getHoraDesayuno(), expedienteComidas.getLugDesayuno(), expedienteComidas.getComeSoloDesayuno());
+        agregarDocumento(Chunk.NEWLINE);
+
+        agregarComida("Comida :", expedienteComidas.getDesComida(), expedienteComidas.getHoraComida(), expedienteComidas.getLugComida(), expedienteComidas.getComeSoloComida());
+        agregarDocumento(Chunk.NEWLINE);
+
+        agregarComida("Cena :", expedienteComidas.getDesCena(), expedienteComidas.getHoraCena(), expedienteComidas.getLugCena(), expedienteComidas.getComeSoloCena());
+        
+        document.newPage();
+    }
+
+    private void agregarComida(String desayuno, String desDesayuno, Date horaDesayuno, String lugDesayuno, String comeSoloDesayuno) {
+
+        agregarDocumento(new Phrase(desayuno, new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+        agregarDocumento(Chunk.NEWLINE);
+        agregarDocumento(new Phrase(desDesayuno, new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.UNDERLINE)));
+        agregarDocumento(Chunk.NEWLINE);
+        String[] nombres = new String[]{"Hora :", "Lugar :", "Come solo : ", " "};
+        String[] valores = new String[]{Funciones.sacarHorario(horaDesayuno), lugDesayuno, comeSoloDesayuno, " "};
+        List<String[]> lis = new ArrayList<String[]>();
+        lis.add(nombres);
+        lis.add(valores);
+        agregarDocumento(crearTabla(lis, new float[]{1f, 1f, 1f, 1f}));
     }
 
     private void agregarDocumento(Element elemento) {
@@ -86,61 +110,98 @@ public class GeneradorExpedientes {
         } catch (DocumentException ex) {
             Logger.getLogger(GeneradorExpedientes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
-    private PdfPTable crearTabla(List<String[]> propiedades , float[] dimensiones) {
+    private PdfPTable crearTabla(List<String[]> propiedades, float[] dimensiones) {
         PdfPTable tabla = new PdfPTable(dimensiones);
         tabla.setWidthPercentage(95);
         tabla.getDefaultCell().setBorder(0);
         tabla.setHorizontalAlignment(Element.ALIGN_LEFT);
-        for (int indice=0;indice<propiedades.get(0).length;indice++) {
+        for (int indice = 0; indice < propiedades.get(0).length; indice++) {
             tabla.addCell(new Phrase(propiedades.get(0)[indice], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
             tabla.addCell(new Phrase(propiedades.get(1)[indice], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.UNDERLINE)));
-            
+
         }
 
         return tabla;
     }
 
-    private List<String[]> generarPropiedades(DatosPaciente datosPaciente) {
-        String[] nombres=new String[]{"Nombre:"
-                                    ,"Domicilio:",
-                                    "Telefono:",
-                                    "Celular:",
-                                    "Correo:"};
-        String[] valores=new String[]{datosPaciente.getApePat()+datosPaciente.getApeMat()+datosPaciente.getNom()
-                                       ,datosPaciente.getDomicilio(),
-                                        datosPaciente.getTel(),
-                                        datosPaciente.getCel(),
-                                        datosPaciente.getCorreo()};
-        List<String[]> lista=new LinkedList<String[]>();
+    private List<String[]> generarPropiedadesMedidas(ExpedienteDatos expedienteDatos) {
+        String[] nombres = new String[]{"Peso Inicial :", "Talla :",
+            "Estructura Osea :",
+            "Peso Ideal :", "IMC : ", " ", "Cadera :", "Cintura :", "Busto :", " "
+        };
+
+        String[] valores = new String[]{expedienteDatos.getPesoInicial().toString() + " kg", expedienteDatos.getTalla().toString() + " m", expedienteDatos.getEstructuraOsea(), expedienteDatos.getPesoIdeal().toString() + " kg",
+            Funciones.truncar(2, ((Double) (expedienteDatos.getPesoInicial() / (expedienteDatos.getTalla() * expedienteDatos.getTalla())))), " ",
+            expedienteDatos.getCadera() + " cm", expedienteDatos.getCintura() + " cm", expedienteDatos.getBusto() + " cm", " "
+        };
+        List<String[]> lista = new LinkedList<String[]>();
         lista.add(nombres);
         lista.add(valores);
         return lista;
     }
-    
+
+    private List<String[]> generarPropiedades(ExpedienteDatos expedienteDatos) {
+        String[] nombres = new String[]{"Edad de comienzo de la obesidad :", "Probable evento disparador de la obesidad:",
+            "Tratamientos previos:",
+            "Toma algun medicamento actualmente :",};
+
+        String[] valores = new String[]{expedienteDatos.getEdaComObe().toString(), expedienteDatos.getEvtDisObe(),
+            expedienteDatos.getTratPrev(),
+            expedienteDatos.getMedAct()
+        };
+        List<String[]> lista = new LinkedList<String[]>();
+        lista.add(nombres);
+        lista.add(valores);
+        return lista;
+    }
+
+    private List<String[]> generarPropiedades(DatosPaciente datosPaciente) {
+        String[] nombres = new String[]{"Nombre:", "Domicilio:",
+            "Telefono:",
+            "Celular:",
+            "Correo:"};
+        String[] valores = new String[]{datosPaciente.getApePat() + datosPaciente.getApeMat() + datosPaciente.getNom(), datosPaciente.getDomicilio(),
+            datosPaciente.getTel(),
+            datosPaciente.getCel(),
+            datosPaciente.getCorreo()};
+        List<String[]> lista = new LinkedList<String[]>();
+        lista.add(nombres);
+        lista.add(valores);
+        return lista;
+    }
+
     public static void main(String[] args) {
-        Dao dao=new Dao();
-        GeneradorExpedientes gen=new GeneradorExpedientes(1, dao.getPaciente(1), null, null, null);
+        Dao dao = new Dao();
+        DatosPaciente paciente = dao.getPaciente(1);
+        GeneradorExpedientes gen = new GeneradorExpedientes(1, paciente, (ExpedienteDatos) paciente.getExpedienteDatoses().iterator().next(), (ExpedienteComidas) paciente.getExpedienteComidases().iterator().next(), null);
         gen.generar();
     }
 
+    private PdfPTable generarImagenEncabezado() {
+        PdfPTable tabla = new PdfPTable(new float[]{.3f});
+        tabla.setWidthPercentage(10);
+        tabla.getDefaultCell().setBorder(0);
+        tabla.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        Image imagen = crearImagen(ruta + "imagenes/mejorPersona200.png");
+        tabla.addCell(imagen);
+        return tabla;
+    }
+
     private PdfPTable generarEncabezado() {
-            PdfPTable tabla = new PdfPTable(new float[]{1f});
-            tabla.setWidthPercentage(95);
-            tabla.getDefaultCell().setBorder(0);
-            tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
-            Image imagen=crearImagen(ruta+"imagenes/LogoMejorPersona.png");
-            tabla.addCell(imagen);
-            System.out.println("acaba");
-            return tabla;
+        PdfPTable tabla = new PdfPTable(new float[]{1f});
+        tabla.setWidthPercentage(100);
+        tabla.getDefaultCell().setBorder(0);
+        tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
+        tabla.addCell(new Phrase("EXPEDIENTE CLINICO", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+        return tabla;
     }
 
     private Image crearImagen(String ruta) {
         try {
-            Image im= Image.getInstance(ruta);  
-            im.
+            Image im = Image.getInstance(ruta);
             return im;
         } catch (BadElementException ex) {
             Logger.getLogger(GeneradorExpedientes.class.getName()).log(Level.SEVERE, null, ex);
@@ -151,5 +212,4 @@ public class GeneradorExpedientes {
         }
         return null;
     }
-    
 }

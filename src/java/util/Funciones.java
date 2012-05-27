@@ -5,6 +5,7 @@
 package util;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -73,7 +74,16 @@ public class Funciones {
         instance.setTime(fechaInicial);
         String amPm=instance.get(Calendar.AM_PM)==Calendar.AM ? "am" : "pm";
         int hora = instance.get(Calendar.HOUR);
+        String hrSt=String.valueOf(hora).length()==1 ? "0"+String.valueOf(hora) : String.valueOf(hora);
+        
         int min = instance.get(Calendar.MINUTE);
-        return hora+":"+min+" "+amPm;
+        String minS=String.valueOf(min).length()==1 ? "0"+String.valueOf(min) : String.valueOf(min);
+        
+        return hrSt+":"+minS+" "+amPm;
+    }
+
+    public static String truncar(int decimales, Double cantidad) {
+        DecimalFormat format=new DecimalFormat("##.##");
+        return format.format(cantidad);
     }
 }

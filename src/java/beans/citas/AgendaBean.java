@@ -61,7 +61,7 @@ public class AgendaBean extends Bean{
         List<ScheduleEvent> lista=new LinkedList<ScheduleEvent>();
         Set<Cita> citas = datosDoctor.getCitas();
         for(Cita original:citas){
-            Cita cita = original.clone();
+            Cita cita = original;
             Date ini=cita.getFechaInicial();
             ini.setHours(ini.getHours()+1);
             Date fin=cita.getFechaFinal();
@@ -75,7 +75,7 @@ public class AgendaBean extends Bean{
     public void agregarCita(List<Cita> citas) {
        List<ScheduleEvent> lista=new LinkedList<ScheduleEvent>();
         for(Cita original:citas){
-            Cita cita = original.clone();
+            Cita cita = original;
             Date ini=cita.getFechaInicial();
             ini.setHours(ini.getHours()+1);
             Date fin=cita.getFechaFinal();

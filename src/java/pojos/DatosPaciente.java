@@ -1,5 +1,5 @@
 package pojos;
-// Generated 16/05/2012 07:53:45 PM by Hibernate Tools 3.2.1.GA
+// Generated 24/05/2012 08:46:41 PM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.HashSet;
@@ -20,6 +20,7 @@ public class DatosPaciente  implements java.io.Serializable {
      private String cel;
      private String domicilio;
      private String correo;
+     private byte[] foto;
      private Set expedienteDatoses = new HashSet(0);
      private Set consultas = new HashSet(0);
      private Set expedienteMatrizs = new HashSet(0);
@@ -29,7 +30,7 @@ public class DatosPaciente  implements java.io.Serializable {
     public DatosPaciente() {
     }
 
-    public DatosPaciente(String apePat, String apeMat, String nom, String segNom, String tel, String cel, String domicilio, String correo, Set expedienteDatoses, Set consultas, Set expedienteMatrizs, Set citas, Set expedienteComidases) {
+    public DatosPaciente(String apePat, String apeMat, String nom, String segNom, String tel, String cel, String domicilio, String correo, byte[] foto, Set expedienteDatoses, Set consultas, Set expedienteMatrizs, Set citas, Set expedienteComidases) {
        this.apePat = apePat;
        this.apeMat = apeMat;
        this.nom = nom;
@@ -38,6 +39,7 @@ public class DatosPaciente  implements java.io.Serializable {
        this.cel = cel;
        this.domicilio = domicilio;
        this.correo = correo;
+       this.foto = foto;
        this.expedienteDatoses = expedienteDatoses;
        this.consultas = consultas;
        this.expedienteMatrizs = expedienteMatrizs;
@@ -107,6 +109,13 @@ public class DatosPaciente  implements java.io.Serializable {
     
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+    public byte[] getFoto() {
+        return this.foto;
+    }
+    
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
     public Set getExpedienteDatoses() {
         return this.expedienteDatoses;

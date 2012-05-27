@@ -19,7 +19,7 @@
                 <h:form>  
                     <h:panelGrid columns="1">
                         <h:commandLink value="Alta paciente" />
-<h:commandLink value="Citas" action="citas"/>
+                        <h:commandLink value="Citas" action="citas"/>
                     </h:panelGrid>
                 </h:form>  
             </p:layoutUnit>  
@@ -34,6 +34,18 @@
                         </h:panelGrid>
                     </center>
                     <p:tabView widgetVar="wiz" >
+                        <center>
+                            <p:tab title="Foto">
+                                <h:panelGrid columns="2">
+                                    <p:photoCam  listener="#{expedienteBean.capturaFoto}" widgetVar="pc"/>
+                                    <h:panelGrid columns="2">
+                                        
+                                    <h:commandButton type="button" value="Tomar Foto" onclick="pc.capture()"/>
+                                    <h:commandButton action="expediente" value="Capturar de Nuevo" onclick="pc.capture()"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:tab>
+                        </center>
 
                         <p:tab id="i1" title="Datos Personales">
                             <p:panel header="Datos Personales">    
@@ -288,8 +300,8 @@
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
                                     <h:panelGrid columns="1">
-                                    <h:outputText value="Retencion de Liquidos"/>
-                                    <h:outputText value="Edema de miembros Inferiores"/>    
+                                        <h:outputText value="Retencion de Liquidos"/>
+                                        <h:outputText value="Edema de miembros Inferiores"/>    
                                     </h:panelGrid>
                                     <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.retLiqPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
@@ -300,7 +312,7 @@
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    
+
 
                                 </h:panelGrid>
                             </p:panel>

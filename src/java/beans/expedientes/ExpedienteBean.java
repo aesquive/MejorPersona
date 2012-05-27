@@ -8,6 +8,7 @@ import beans.Bean;
 import documentadores.GeneradorExpedientes;
 import guardadores.GuardadorExpediente;
 import java.util.Calendar;
+import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FlowEvent;
 import pojos.DatosPaciente;
 import pojos.ExpedienteComidas;
@@ -43,6 +44,13 @@ public class ExpedienteBean {
         expedienteMatriz=new ExpedienteMatriz();
     }
 
+    
+    public void capturaFoto(CaptureEvent event){
+        System.out.println("entro");
+        byte[] data = event.getData();
+        datosPaciente.setFoto(data);
+    }
+    
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
     }
