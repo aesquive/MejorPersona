@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.border.Border;
 import pojos.DatosPaciente;
 import pojos.ExpedienteComidas;
 import pojos.ExpedienteDatos;
@@ -70,7 +71,7 @@ public class GeneradorExpedientes {
 
     private void escribirArchivo() {
         agregarDocumento(generarImagenEncabezado());
-        agregarDocumento(generarEncabezado());
+        //agregarDocumento(generarEncabezado());
         agregarDocumento(new Phrase(" "));
         agregarDocumento(crearTabla(generarPropiedades(datosPaciente), new float[]{.3f, 2f}));
         agregarDocumento(new Phrase(" "));
@@ -86,8 +87,13 @@ public class GeneradorExpedientes {
         agregarDocumento(Chunk.NEWLINE);
 
         agregarComida("Cena :", expedienteComidas.getDesCena(), expedienteComidas.getHoraCena(), expedienteComidas.getLugCena(), expedienteComidas.getComeSoloCena());
-        
-        document.newPage();
+
+        if (document.getPageNumber() == 0) {
+            document.newPage();
+        }
+        agregarDocumento(crearMatrizPadecimientos());
+        agregarDocumento(Chunk.NEWLINE);
+        agregarDocumento(crearMatrizPadecimientosPersonales());
     }
 
     private void agregarComida(String desayuno, String desDesayuno, Date horaDesayuno, String lugDesayuno, String comeSoloDesayuno) {
@@ -163,7 +169,7 @@ public class GeneradorExpedientes {
             "Telefono:",
             "Celular:",
             "Correo:"};
-        String[] valores = new String[]{datosPaciente.getApePat() + datosPaciente.getApeMat() + datosPaciente.getNom(), datosPaciente.getDomicilio(),
+        String[] valores = new String[]{datosPaciente.getApePat() +" "+ datosPaciente.getApeMat() +" "+ datosPaciente.getNom(), datosPaciente.getDomicilio(),
             datosPaciente.getTel(),
             datosPaciente.getCel(),
             datosPaciente.getCorreo()};
@@ -176,26 +182,18 @@ public class GeneradorExpedientes {
     public static void main(String[] args) {
         Dao dao = new Dao();
         DatosPaciente paciente = dao.getPaciente(1);
-        GeneradorExpedientes gen = new GeneradorExpedientes(1, paciente, (ExpedienteDatos) paciente.getExpedienteDatoses().iterator().next(), (ExpedienteComidas) paciente.getExpedienteComidases().iterator().next(), null);
+        GeneradorExpedientes gen = new GeneradorExpedientes(1, paciente, (ExpedienteDatos) paciente.getExpedienteDatoses().iterator().next(), (ExpedienteComidas) paciente.getExpedienteComidases().iterator().next(), (ExpedienteMatriz)paciente.getExpedienteMatrizs().iterator().next());
         gen.generar();
     }
 
     private PdfPTable generarImagenEncabezado() {
-        PdfPTable tabla = new PdfPTable(new float[]{.3f});
-        tabla.setWidthPercentage(10);
-        tabla.getDefaultCell().setBorder(0);
-        tabla.setHorizontalAlignment(Element.ALIGN_RIGHT);
-        Image imagen = crearImagen(ruta + "imagenes/mejorPersona200.png");
-        tabla.addCell(imagen);
-        return tabla;
-    }
-
-    private PdfPTable generarEncabezado() {
-        PdfPTable tabla = new PdfPTable(new float[]{1f});
-        tabla.setWidthPercentage(100);
+        PdfPTable tabla = new PdfPTable(new float[]{10f, 4f});
+        tabla.setWidthPercentage(50);
         tabla.getDefaultCell().setBorder(0);
         tabla.setHorizontalAlignment(Element.ALIGN_CENTER);
+        Image imagen = crearImagen(ruta + "imagenes/LogoMejorPersona.png");
         tabla.addCell(new Phrase("EXPEDIENTE CLINICO", new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+        tabla.addCell(imagen);
         return tabla;
     }
 
@@ -211,5 +209,47 @@ public class GeneradorExpedientes {
             Logger.getLogger(GeneradorExpedientes.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    private PdfPTable crearMatrizPadecimientos() {
+        PdfPTable tabla = new PdfPTable(new float[]{.9f,.9f,.9f,.9f});
+        tabla.setWidthPercentage(95);
+        
+        tabla.setHorizontalAlignment(Element.ALIGN_LEFT);
+        String[] izq = new String[]{" ", "Obesidad", "Diabetes", "Hipertension", "Trigliceridos", "Colesterol", "Alergias", "Tabaquismo", "Alcoholismo", "Transtornos mentales", "Problemas cardiacos"};
+        String[] mam = new String[]{"Mama", expedienteMatriz.getObeMama(), expedienteMatriz.getDiaMama(),expedienteMatriz.getHipMama(), expedienteMatriz.getTriMama(), expedienteMatriz.getColMama(), expedienteMatriz.getAleMama(), expedienteMatriz.getTabMama(), expedienteMatriz.getAlcMama(), expedienteMatriz.getMensMama(), expedienteMatriz.getCardMama()};
+        String[] pap = new String[]{"Papa", expedienteMatriz.getObePapa(), expedienteMatriz.getDiaPapa(),expedienteMatriz.getHipPapa(),expedienteMatriz.getTriPapa(), expedienteMatriz.getColPapa(), expedienteMatriz.getAlePapa(), expedienteMatriz.getTabPapa(), expedienteMatriz.getAlcPapa(), expedienteMatriz.getMensPapa(), expedienteMatriz.getCardPapa()};
+        String[] paciente = new String[]{"Paciente", expedienteMatriz.getObePac(), expedienteMatriz.getDiaPac(),expedienteMatriz.getHipPac(), expedienteMatriz.getTriPac(), expedienteMatriz.getColPac(), expedienteMatriz.getAlePac(), expedienteMatriz.getTabPac(), expedienteMatriz.getAlcPac(), expedienteMatriz.getMensPac(), expedienteMatriz.getCardPac()};
+
+        for (int t = 0; t < izq.length; t++) {
+            tabla.addCell(new Phrase(izq[t], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+            if(t==0){
+                tabla.addCell(new Phrase(mam[t], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+                tabla.addCell(new Phrase(pap[t], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+                tabla.addCell(new Phrase(paciente[t], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+            }else{
+            tabla.addCell(new Phrase(mam[t], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
+            tabla.addCell(new Phrase(pap[t], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
+            tabla.addCell(new Phrase(paciente[t], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
+                
+            }
+        }
+        return tabla;
+    }
+
+    private Element crearMatrizPadecimientosPersonales() {
+        PdfPTable tabla = new PdfPTable(new float[]{1.5f,.9f});
+        tabla.setWidthPercentage(50);
+        
+        tabla.setHorizontalAlignment(Element.ALIGN_LEFT);
+        String[] izq = new String[]{"Estrenimiento","Retencion de liquidos        Edema de miembros menores         Inferiores","Varices"};
+        String[] der=new String[]{expedienteMatriz.getEstrePac(),expedienteMatriz.getRetLiqPac(),expedienteMatriz.getVarPac()};
+        for (int t = 0; t < izq.length; t++) {
+            tabla.addCell(new Phrase(izq[t], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));
+            
+            tabla.addCell(new Phrase(der[t], new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
+                
+        }
+        return tabla;
     }
 }
