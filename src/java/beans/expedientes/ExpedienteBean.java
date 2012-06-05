@@ -45,12 +45,6 @@ public class ExpedienteBean {
     }
 
     
-    public void capturaFoto(CaptureEvent event){
-        System.out.println("entro");
-        byte[] data = event.getData();
-        datosPaciente.setFoto(data);
-    }
-    
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
     }

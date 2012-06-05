@@ -6,7 +6,14 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mejorpersona</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password"/>
+    <property name="hibernate.connection.password"></property>
+    <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+    <property name="c3p0.acquire_increment">1</property>
+    <property name="c3p0.idle_test_period">100</property>
+    <property name="c3p0.max_size">100</property>
+    <property name="c3p0.max_statements">0</property>
+    <property name="c3p0.min_size">10</property>
+    <property name="c3p0.timeout">100</property>
     <mapping resource="pojos/Consulta.hbm.xml"/>
     <mapping resource="pojos/ExpedienteComidas.hbm.xml"/>
     <mapping resource="pojos/ExpedienteMatriz.hbm.xml"/>
