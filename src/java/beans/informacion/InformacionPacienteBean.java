@@ -1,10 +1,14 @@
 package beans.informacion;
 
 import base.Dao;
+import beans.Bean;
+import beans.login.LoginBean;
+import configuradores.Configurador;
 import documentadores.GeneradorExpedientes;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,32 +26,40 @@ import util.Vector;
  */
 public class InformacionPacienteBean {
 
+    private final String rutaServidor = Configurador.getCfg("rutaWeb");
+    private final String ruta = Configurador.getCfg("rutaLocal");
+    private final String delimitador=Configurador.getCfg("delimitador");
+    
     private String idPacienteElegido;
-    private final String ruta = "/var/www/private/";
     private DatosPaciente pacienteActual;
     private List<DatosPaciente> listaPacientes;
     private List<Vector<String, String>> archivos;
     private Dao dao;
-    private String rutaServidor = "http://localhost/private/";
     private String rutaPdfActual;
+    private LoginBean loginBean;
 
+    
+    
     public InformacionPacienteBean() {
         dao = new Dao();
+        loginBean = (LoginBean) Bean.getBean("loginBean");
         generarListaPacientes();
         rutaPdfActual = rutaServidor + "logo.pdf";
     }
 
-    public InformacionPacienteBean(DatosPaciente pacienteActual) {
-        dao = new Dao();
-        this.listaPacientes.add(pacienteActual);
-        this.idPacienteElegido = pacienteActual.getIdPaciente().toString();
-        rutaPdfActual = rutaServidor + "logo.pdf";
-        generarArchivos();
-
-    }
-
     private void generarListaPacientes() {
-        setListaPacientes((List<DatosPaciente>) dao.getTabla(DatosPaciente.class));
+        if (loginBean.getDatosDoctor() != null) {
+            setListaPacientes((List<DatosPaciente>) dao.getTabla(DatosPaciente.class));
+            Collections.sort(listaPacientes);
+            return;
+        }
+        if (loginBean.getDatosPaciente() != null) {
+            listaPacientes = new LinkedList<DatosPaciente>();
+            listaPacientes.add(loginBean.getDatosPaciente());
+            this.idPacienteElegido = loginBean.getDatosPaciente().getIdPaciente().toString();
+            this.pacienteActual = dao.getPaciente(Integer.parseInt(idPacienteElegido));
+            generarArchivos();
+        }
     }
 
     private void generarArchivos() {
@@ -56,8 +68,10 @@ public class InformacionPacienteBean {
         if (this.getPacienteActual() == null) {
             return;
         }
-        String rutaExpediente = obtenerRutaExpediente(ruta + "expedientes/");
-        getArchivos().add(new Vector<String, String>("Expediente", rutaServidor + "expedientes/" + rutaExpediente));
+        String rutaExpediente = obtenerRutaExpediente(ruta + "expedientes"+delimitador);
+        getArchivos().add(new Vector<String, String>("Expediente", rutaServidor + "expedientes"+delimitador + rutaExpediente));
+
+        this.rutaPdfActual = archivos.get(0).getY();
     }
 
     private String obtenerRutaExpediente(String rutaExp) {
@@ -167,7 +181,7 @@ public class InformacionPacienteBean {
             System.out.println("los archivos son " + archivos.size());
             return;
         }
-        archivos=new LinkedList<Vector<String, String>>();
-        
+        archivos = new LinkedList<Vector<String, String>>();
+
     }
 }

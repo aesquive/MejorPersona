@@ -35,6 +35,9 @@
         <property name="foto" type="binary">
             <column name="Foto" />
         </property>
+        <property name="usuario" type="string">
+            <column name="Usuario" />
+        </property>
         <set name="expedienteDatoses" inverse="true">
             <key>
                 <column name="IdPaciente" />

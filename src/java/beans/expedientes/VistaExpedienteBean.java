@@ -11,8 +11,7 @@ public class VistaExpedienteBean extends Bean{
     private String ruta;
 
     public VistaExpedienteBean(){
-        ruta="Expos";
-        
+            
     }
     
     public VistaExpedienteBean(String ruta){

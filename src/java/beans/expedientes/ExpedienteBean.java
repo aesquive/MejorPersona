@@ -92,6 +92,7 @@ public class ExpedienteBean {
     }
     
     public String guardar(){
+        generarClavePaciente();
         inyectarPaciente();
         ponerHorasComidas();
         GuardadorExpediente guardador=new GuardadorExpediente(this.datosPaciente,this.expedienteComidas,this.expedienteDatos,this.expedienteMatriz);
@@ -214,5 +215,21 @@ public class ExpedienteBean {
         GeneradorExpedientes generador=new GeneradorExpedientes(datosPaciente.getIdPaciente(), datosPaciente, expedienteDatos, expedienteComidas, expedienteMatriz);
         String archivo = generador.generar();
         Bean.ponerBean("vistaExpedienteBean", new VistaExpedienteBean(archivo));
+    }
+
+    private void generarClavePaciente() {
+        String apePat = datosPaciente.getApePat();
+        String apeMat = datosPaciente.getApeMat();
+        String nom = datosPaciente.getNom();
+        String primeras=apePat.substring(0, 1)+apePat.substring(apePat.length()-1,apePat.length());
+        String segundas=apeMat.substring(0, 1)+apeMat.substring(apeMat.length()-1,apeMat.length());
+        String terc=nom.substring(0, 1)+nom.substring(nom.length()-1,nom.length());
+        String usuario=primeras+segundas+terc;
+        datosPaciente.setUsuario(usuario.toUpperCase());
+    }
+    
+    public static void main(String[] args) {
+        String cad="cad";
+        System.out.println(cad.substring(cad.length()-1, cad.length()));
     }
 }

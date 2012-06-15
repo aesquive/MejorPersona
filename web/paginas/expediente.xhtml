@@ -18,9 +18,14 @@
             <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
                 <h:form>  
                     <h:panelGrid columns="1">
-                        <h:commandLink value="Alta paciente"  action="expediente"/>
-                        <h:commandLink value="Citas" action="citas"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Alta paciente"  action="expediente"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Citas" action="citas"/>
                         <h:commandLink value="Ver Documentacion" action="documentos"/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <h:commandLink value="Cerrar Sesion" action="salir"/>
                     </h:panelGrid>
                 </h:form>  
             </p:layoutUnit>  
@@ -29,9 +34,9 @@
                 <h:form>    
                     <center>
                         <h:panelGrid columns="3">
-                            <h:graphicImage width="50px" dir="LTR" height="50px" url="./imagenes/LogoMejorPersonaSinRefl.png"/>
+                            <h:graphicImage  width="50px"   height="50px" url="#{configuracionBean.rutaWeb}imagenes#{configuracionBean.delimitador}LogoMejorPersonaSinRefl.png"/>
                             <h:outputText value="Expediente Clinico"/>
-                            <h:graphicImage width="50px" height="50px" url="./imagenes/LogoMejorPersonaSin.png"/>
+                            <h:graphicImage width="50px" height="50px"  url="#{configuracionBean.rutaWeb}imagenes#{configuracionBean.delimitador}LogoMejorPersonaSin.png"/>
                         </h:panelGrid>
                     </center>
                     <p:tabView widgetVar="wiz" >
@@ -41,11 +46,11 @@
                                     <p:column>
                                         <h:panelGrid columns="2">
                                             <h:outputText value="Apellido Paterno"/>
-                                            <p:inputText  value="#{expedienteBean.datosPaciente.apePat}"/>
+                                            <p:inputText required="" value="#{expedienteBean.datosPaciente.apePat}"/>
                                             <h:outputText value="Apellido Materno"/>
-                                            <p:inputText  value="#{expedienteBean.datosPaciente.apeMat}"/>
+                                            <p:inputText required="" value="#{expedienteBean.datosPaciente.apeMat}"/>
                                             <h:outputText value="Nombre"/>
-                                            <p:inputText  value="#{expedienteBean.datosPaciente.nom}"/>
+                                            <p:inputText required="" value="#{expedienteBean.datosPaciente.nom}"/>
                                             <h:outputText value="Segundo Nombre"/>
                                             <p:inputText  value="#{expedienteBean.datosPaciente.segNom}"/>
 

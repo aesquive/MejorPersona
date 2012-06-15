@@ -7,6 +7,7 @@ package beans.citas;
 import base.Dao;
 import beans.Bean;
 import beans.login.LoginBean;
+import configuradores.Configurador;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +36,7 @@ public class CitasBean {
     public CitasBean() {
         dao = new Dao();
         pacientes = dao.getTabla(DatosPaciente.class);
+        Collections.sort(pacientes);
         cita = new Cita();
     }
 
@@ -73,7 +75,7 @@ public class CitasBean {
         System.out.println("fecha final " + cita.getFechaFinal());
         System.out.println("descr " + cita.getDesCita());
         DatosDoctor datosDoctor = ((LoginBean) Bean.getBean("loginBean")).getDatosDoctor();
-        restarHoraCitas(1 , dao.getTabla(Cita.class));
+        restarHoraCitas(Integer.parseInt(Configurador.getCfg("horasDif")) , dao.getTabla(Cita.class));
         guardarCita(datosDoctor);
         AgendaBean bean = (AgendaBean) Bean.getBean("agendaBean");
         bean.agregarCita(dao.queryCriterion(Cita.class, Restrictions.eq("datosDoctor",datosDoctor)));

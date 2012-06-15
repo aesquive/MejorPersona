@@ -18,9 +18,14 @@
             <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
                 <h:form>  
                     <h:panelGrid columns="1">
-                        <h:commandLink value="Alta paciente"  action="expediente"/>
-                        <h:commandLink value="Citas" action="citas"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Alta paciente"  action="expediente"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Citas" action="citas"/>
                         <h:commandLink value="Ver Documentacion" action="documentos"/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <h:commandLink value="Cerrar Sesion" action="salir"/>
                     </h:panelGrid>
                 </h:form>  
             </p:layoutUnit>  
@@ -35,7 +40,7 @@
                             <h:outputText value="Paciente"/>
                             <p:selectOneMenu value="#{informacionPacienteBean.idPacienteElegido}">
                                 <f:selectItem itemLabel="--Seleccione--" itemValue="#{null}"/>
-                                <f:selectItems value="#{informacionPacienteBean.listaPacientes}" var="pac" itemLabel="#{pac.nom} #{pac.apePat} #{pac.apeMat}" itemValue="#{pac.idPaciente.toString()}"/>
+                                <f:selectItems value="#{informacionPacienteBean.listaPacientes}" var="pac" itemLabel="#{pac.apePat} #{pac.apeMat} #{pac.nom} " itemValue="#{pac.idPaciente.toString()}"/>
                                 <p:ajax update="listaPdf,pdfPanel" listener="#{informacionPacienteBean.cambioPaciente}"/>
                             </p:selectOneMenu>
                         </h:panelGrid>
@@ -43,7 +48,7 @@
                         <h:panelGrid id="listaPdf" columns="3">
                             <h:outputText value="Archivo"/>
                             <p:selectOneMenu value="#{informacionPacienteBean.rutaPdfActual}">
-                                <f:selectItem itemLabel="--Seleccione--" itemValue="http://localhost/private/logo.pdf"/>
+                                <f:selectItem itemLabel="--Seleccione--" itemValue="#{configuracionBean.rutaWeb}logo.pdf"/>
                                 <f:selectItems value="#{informacionPacienteBean.archivos}" var="arc" itemLabel="#{arc.x}" itemValue="#{arc.y}"/>
                                 <p:ajax update="pdfPanel" listener="#{informacionPacienteBean.cambioArchivo}"/>
                             </p:selectOneMenu>

@@ -18,13 +18,18 @@
             <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
                 <h:form>  
                     <h:panelGrid columns="1">
-                        <h:commandLink value="Alta paciente"  action="expediente"/>
-                        <h:commandLink value="Citas" action="citas"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Alta paciente"  action="expediente"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Citas" action="citas"/>
                         <h:commandLink value="Ver Documentacion" action="documentos"/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <h:commandLink value="Cerrar Sesion" action="salir"/>
                     </h:panelGrid>
                 </h:form>  
             </p:layoutUnit>  
-            
+
             <p:layoutUnit position="center">
 
 
@@ -50,7 +55,7 @@
 
 
                 <h:panelGrid columns="2" style="position: absolute;right: 10%; top: 10%">
-                    <h:commandButton type="button" style="width: 40px;height: 40px" onclick="dlg.show();" image="./imagenes/add.png" value="BOTON"/>
+                    <h:commandButton type="button" style="width: 40px;height: 40px" onclick="dlg.show();" image="#{configuracionBean.rutaWeb}imagenes#{configuracionBean.delimitador}add.png" value="BOTON"/>
                     <h:outputText value="Alta" />
                 </h:panelGrid>
 

@@ -31,8 +31,6 @@ public class AgendaBean extends Bean{
     public AgendaBean() {
         eventoSeleccionado=new DefaultScheduleEvent();
         
-        timeZone=TimeZone.getTimeZone("Mexico/General");
-        
         datosDoctor=((LoginBean)Bean.getBean("loginBean")).getDatosDoctor();
         List<ScheduleEvent> eventos = obtenerEventos(datosDoctor);
         agenda = new DefaultScheduleModel(eventos);
