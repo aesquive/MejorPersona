@@ -31,7 +31,7 @@ import util.Funciones;
  */
 public class GeneradorExpedientes {
 
-    private final static String ruta = "./web/";
+    private final static String ruta = "/var/www/private/";
     private DatosPaciente datosPaciente;
     private ExpedienteDatos expedienteDatos;
     private ExpedienteComidas expedienteComidas;

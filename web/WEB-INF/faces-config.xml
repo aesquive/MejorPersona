@@ -28,16 +28,21 @@
         <managed-bean-class>beans.login.LoginBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-    <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>inicial</from-outcome>
-            <to-view-id>/paginas/inicial.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
     <managed-bean>
         <managed-bean-name>citasBean</managed-bean-name>
         <managed-bean-class>beans.citas.CitasBean</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>informacionPacienteBean</managed-bean-name>
+        <managed-bean-class>beans.informacion.InformacionPacienteBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>documentos</from-outcome>
+            <to-view-id>/paginas/documentos.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

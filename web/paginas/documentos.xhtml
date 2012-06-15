@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">  
+
+
+            <p:layoutUnit position="south" size="28" resizable="false" closable="false" collapsible="false">  
+                <h:outputText style="font-size: smaller" value="Hecho por Alberto Emmanuel Esquivel Vega 02/05/2012." />  
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
+                <h:form>  
+                    <h:panelGrid columns="1">
+                        <h:commandLink value="Alta paciente"  action="expediente"/>
+                        <h:commandLink value="Citas" action="citas"/>
+                        <h:commandLink value="Ver Documentacion" action="documentos"/>
+                    </h:panelGrid>
+                </h:form>  
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="center">
+                <h:form>
+
+                    <h:panelGrid columns="2" >
+
+
+                        <h:panelGrid  columns="2">
+                            <h:outputText value="Paciente"/>
+                            <p:selectOneMenu value="#{informacionPacienteBean.idPacienteElegido}">
+                                <f:selectItem itemLabel="--Seleccione--" itemValue="#{null}"/>
+                                <f:selectItems value="#{informacionPacienteBean.listaPacientes}" var="pac" itemLabel="#{pac.nom} #{pac.apePat} #{pac.apeMat}" itemValue="#{pac.idPaciente.toString()}"/>
+                                <p:ajax update="listaPdf,pdfPanel" listener="#{informacionPacienteBean.cambioPaciente}"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+
+                        <h:panelGrid id="listaPdf" columns="3">
+                            <h:outputText value="Archivo"/>
+                            <p:selectOneMenu value="#{informacionPacienteBean.rutaPdfActual}">
+                                <f:selectItem itemLabel="--Seleccione--" itemValue="http://localhost/private/logo.pdf"/>
+                                <f:selectItems value="#{informacionPacienteBean.archivos}" var="arc" itemLabel="#{arc.x}" itemValue="#{arc.y}"/>
+                                <p:ajax update="pdfPanel" listener="#{informacionPacienteBean.cambioArchivo}"/>
+                            </p:selectOneMenu>
+                            <h:outputText value="    "/>
+                        </h:panelGrid>
+
+                    </h:panelGrid>
+                    <h:panelGrid id="pdfPanel"  width="98%">
+                        <object width="75%" height="600px" type="application/pdf" data="#{informacionPacienteBean.rutaPdfActual}"/>
+                    </h:panelGrid>
+                </h:form>
+            </p:layoutUnit>  
+
+        </p:layout>  
+    </h:body>
+</html>

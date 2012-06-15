@@ -25,7 +25,7 @@ public class LoginBean extends Bean{
         for(DatosDoctor doc:doctores){
             if(doc.getUsu().equals(usuario) && doc.getPas().equals(password)){
                 datosDoctor=doc;
-                return "inicial";
+                return "documentos";
             }
         }
         return "index";

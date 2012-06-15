@@ -19,13 +19,14 @@
                     <h:panelGrid columns="1">
                         <h:commandLink value="Alta paciente"  action="expediente"/>
                         <h:commandLink value="Citas" action="citas"/>
+                        <h:commandLink value="Ver Documentacion" action="documentos"/>
                     </h:panelGrid>
                 </h:form>  
             </p:layoutUnit>  
 
             <p:layoutUnit position="center">
                 <center>
-                    <object type="application/pdf"  data="../expedientes/1.pdf" width="98%" height="98%"/>
+                    <object type="application/pdf"  data="http://localhost/private/expedientes/#{vistaExpedienteBean.ruta}" width="98%" height="98%"/>
                 </center>
             </p:layoutUnit>  
 

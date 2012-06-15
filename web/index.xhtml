@@ -15,18 +15,16 @@
             </p:layoutUnit>  
 
             <p:layoutUnit position="center">
-                <h:form>
+                <h:form style="background-color:#ccfaf9">
                     <center>
-                        <h:outputText value="Sistema de Control de Citas MejorPersona"/>
-                        <br></br>
-                        <br></br>
-                        <h:graphicImage width="50%" height="70%" url="./paginas/imagenes/LogoMejorPersona.png"/>
-                            <h:panelGrid border="5" columns="2">
-                                <h:outputText value="Usuario"/>
-                                <p:inputText value="#{loginBean.usuario}"/>
+                        <h:graphicImage width="500px" height="500px" url="./paginas/imagenes/LogoMejorPersona.png"/>
+                        <br/>
+                            <p:panelGrid columns="2">
+                                <h:outputText  value="Usuario"/>
+                                <p:inputText  value="#{loginBean.usuario}"/>
                                 <h:outputText value="Password"/>
                                 <p:password value="#{loginBean.password}"/>
-                            </h:panelGrid>
+                            </p:panelGrid>
                             <h:commandButton value="Accesar" action="#{loginBean.verificarUsuario}"/>
                     </center>
                 </h:form>
