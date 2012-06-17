@@ -4,20 +4,19 @@ import base.Dao;
 import beans.Bean;
 import beans.login.LoginBean;
 import configuradores.Configurador;
-import documentadores.GeneradorExpedientes;
+import documentadores.expedientes.GeneradorExpedientes;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.event.AjaxBehaviorEvent;
-import pojos.DatosPaciente;
-import pojos.ExpedienteComidas;
-import pojos.ExpedienteDatos;
-import pojos.ExpedienteMatriz;
+import pojos.*;
+import util.Funciones;
 import util.Vector;
 
 /**
@@ -70,8 +69,8 @@ public class InformacionPacienteBean {
         }
         String rutaExpediente = obtenerRutaExpediente(ruta + "expedientes"+delimitador);
         getArchivos().add(new Vector<String, String>("Expediente", rutaServidor + "expedientes"+delimitador + rutaExpediente));
-
         this.rutaPdfActual = archivos.get(0).getY();
+        generarRecetas();
     }
 
     private String obtenerRutaExpediente(String rutaExp) {
@@ -183,5 +182,14 @@ public class InformacionPacienteBean {
         }
         archivos = new LinkedList<Vector<String, String>>();
 
+    }
+
+    private void generarRecetas() {
+        Set<Receta> recetas = pacienteActual.getRecetas();
+        for(Receta rec:recetas){
+            String nombre ="Receta ("+Funciones.DateToString(rec.getFecha())+")";
+            String rutaArc=Configurador.getCfg("rutaWeb")+"recetas"+delimitador+rec.getIdReceta()+".pdf";
+            archivos.add(new Vector<String, String>(nombre, rutaArc));
+        }
     }
 }

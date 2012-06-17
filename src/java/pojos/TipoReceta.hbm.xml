@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 16/06/2012 12:08:16 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="pojos.TipoReceta" table="tipo_receta" catalog="mejorpersona">
+        <id name="idTipoReceta" type="java.lang.Integer">
+            <column name="IdTipoReceta" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="datosDoctor" class="pojos.DatosDoctor" fetch="select">
+            <column name="IdDoctor" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="Nombre" />
+        </property>
+        <property name="archivo" type="string">
+            <column name="Archivo" />
+        </property>
+        <property name="inicialX" type="java.lang.Integer">
+            <column name="InicialX" />
+        </property>
+        <property name="inicialY" type="java.lang.Integer">
+            <column name="InicialY" />
+        </property>
+        <set name="recetas" inverse="true">
+            <key>
+                <column name="IdTipoReceta" />
+            </key>
+            <one-to-many class="pojos.Receta" />
+        </set>
+    </class>
+</hibernate-mapping>

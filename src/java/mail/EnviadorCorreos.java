@@ -9,7 +9,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EnviadorCorreos {
 
-    private final String puerto = "2525";
+    private final String puerto ;
     private final String host;
     private final String remitente;
     private final String password;
@@ -17,9 +17,6 @@ public class EnviadorCorreos {
     private Session sesion;
 
     public static void main(String[] args) {
-        EnviadorCorreos enviador = new EnviadorCorreos("smtp.mejorpersona.com.mx", "mejor.persona@mejorpersona.com.mx", "abcde123");
-
-        enviador.enviar(new String[]{"alberto.esquivel.quants@hotmail.com","esquivel.vega.alberto@gmail.com"}, "Enviando correo desde Java", new String[]{"EL CUERPO DEL MENSAJE"});
     }
 
     private String obtenerHTML(String[] cuerpo){
@@ -44,7 +41,8 @@ public class EnviadorCorreos {
         return cabecera+centro+fin;
     }
     
-    public EnviadorCorreos(String host , final String remitente , final String password) {
+    public EnviadorCorreos(String host , final String remitente , final String password ,final String puerto) {
+        this.puerto=puerto;
         this.host = host;
         this.remitente = remitente;
         this.password = password;

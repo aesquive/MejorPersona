@@ -20,6 +20,7 @@
                     <h:panelGrid columns="1">
                         <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Alta paciente"  action="expediente"/>
                         <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Citas" action="citas"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Recetas" action="recetas"/>
                         <h:commandLink value="Ver Documentacion" action="documentos"/>
                         <br/>
                         <br/>
@@ -53,7 +54,8 @@
                                             <p:inputText required="" value="#{expedienteBean.datosPaciente.nom}"/>
                                             <h:outputText value="Segundo Nombre"/>
                                             <p:inputText  value="#{expedienteBean.datosPaciente.segNom}"/>
-
+                                            <h:outputText value="Fecha de Nacimiento"/>
+                                            <p:calendar showOn="button" navigator="true" value="#{expedienteBean.datosPaciente.fecnac}"/>
                                         </h:panelGrid>
 
                                     </p:column>

@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Expediente Clinico</title>
+    </h:head>
+    <h:body>
+
+
+
+
+        <p:layout fullPage="true">  
+
+
+
+
+            <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
+                <h:form>  
+                    <h:panelGrid columns="1">
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Alta paciente"  action="expediente"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Citas" action="citas"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Recetas" action="recetas"/>
+                        <h:commandLink value="Ver Documentacion" action="documentos"/>
+                        <br/>
+                        <br/>
+                        <h:commandLink value="Cerrar Sesion" action="salir"/>
+                    </h:panelGrid>
+                </h:form>  
+            </p:layoutUnit>  
+
+            <p:layoutUnit position="center">
+
+
+
+
+                <h:form>
+
+
+                    <h:panelGrid columns="4">
+                        <h:outputText value="Paciente:"/>
+                        <p:selectOneMenu required="true" value="#{recetasBean.idPacienteSeleccionado}">
+                            <f:selectItem itemValue="#{null}" itemLabel="--Seleccione--"/>
+                            <f:selectItems value="#{recetasBean.pacientes}" var="pac" itemLabel="#{pac.apePat} #{pac.apeMat} #{pac.nom}" itemValue="#{pac.idPaciente.toString()}"/>
+                            <p:ajax update="pdf" listener="#{recetasBean.cambioPaciente}"/>
+                        </p:selectOneMenu>
+
+
+
+                        <h:outputText value="Tipo de Receta:"/>
+                        <p:selectOneMenu required="true" value="#{recetasBean.idTipoRecetaSeleccionado}">
+                            <f:selectItem itemValue="#{null}" itemLabel="--Seleccione--"/>
+                            <f:selectItems value="#{recetasBean.tiposRecetas}" var="tipRec" itemLabel="#{tipRec.nombre}" itemValue="#{tipRec.idTipoReceta}"/>
+                            <p:ajax update="pdf"  listener="#{recetasBean.cambioReceta}"/>
+                        </p:selectOneMenu>
+
+
+                    </h:panelGrid>
+
+                    <h:panelGrid width="90%" columns="2">
+
+                        <h:panelGrid width="40%" columns="1">
+                            <h:outputText value="Contenido de la receta:"/>
+                            <p:inputTextarea value="#{recetasBean.contenido}" cols="60" rows="12" autoResize="false" required="true" >
+                                <p:ajax update="pdf" event="blur" listener="#{recetasBean.cambioContenido}"/>
+                            </p:inputTextarea>
+                        </h:panelGrid>
+                        <h:panelGrid  id="pdf" columns="1">
+                            <object type="application/pdf" width="500px" height="600px" data="#{recetasBean.rutaPdf}"/>
+
+                        </h:panelGrid>
+                    </h:panelGrid>
+
+
+                    <h:commandButton action="#{recetasBean.guardarReceta}" value="Guardar y Enviar Receta"/>
+
+
+                </h:form>
+
+            </p:layoutUnit>  
+
+        </p:layout>  
+    </h:body>
+</html>

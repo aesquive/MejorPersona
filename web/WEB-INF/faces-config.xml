@@ -36,7 +36,7 @@
     <managed-bean>
         <managed-bean-name>informacionPacienteBean</managed-bean-name>
         <managed-bean-class>beans.informacion.InformacionPacienteBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
@@ -78,4 +78,16 @@
         <managed-bean-class>beans.ConfiguracionBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>recetasBean</managed-bean-name>
+        <managed-bean-class>beans.recetas.RecetasBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+        <from-view-id>/paginas/recetas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>salir</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

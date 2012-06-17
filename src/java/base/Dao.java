@@ -4,12 +4,15 @@
  */
 package base;
 
+import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import pojos.DatosPaciente;
+import pojos.Receta;
+import pojos.TipoReceta;
 
 /**
  *
@@ -76,6 +79,17 @@ public class Dao {
     }
 
     public DatosPaciente getPaciente(int idSeleccionado) {
-        return (DatosPaciente) sesion.createCriteria(DatosPaciente.class).add(Restrictions.eq("id", idSeleccionado)).uniqueResult();
+        return (DatosPaciente) sesion.createCriteria(DatosPaciente.class).add(Restrictions.eq("id", idSeleccionado)).list().get(0);
+    }
+
+    public TipoReceta getTipoReceta(int id) {
+        return (TipoReceta) sesion.createCriteria(TipoReceta.class).add(Restrictions.eq("id", id)).list().get(0);
+    }
+
+    public Integer guardar(Object o) {
+        Transaction beginTransaction = sesion.beginTransaction();
+        Serializable save = sesion.save(o);
+        beginTransaction.commit();
+        return (Integer) save;
     }
 }

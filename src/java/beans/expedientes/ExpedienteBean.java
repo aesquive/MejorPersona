@@ -5,7 +5,8 @@
 package beans.expedientes;
 
 import beans.Bean;
-import documentadores.GeneradorExpedientes;
+import configuradores.Configurador;
+import documentadores.expedientes.GeneradorExpedientes;
 import guardadores.GuardadorExpediente;
 import java.util.Calendar;
 import org.primefaces.event.CaptureEvent;
@@ -98,7 +99,7 @@ public class ExpedienteBean {
         GuardadorExpediente guardador=new GuardadorExpediente(this.datosPaciente,this.expedienteComidas,this.expedienteDatos,this.expedienteMatriz);
         guardador.guardar();
         ponerBeanVista();
-        return "vistaExpediente";
+        return "vista";
     }
 
     /**
@@ -213,7 +214,7 @@ public class ExpedienteBean {
 
     private void ponerBeanVista() {
         GeneradorExpedientes generador=new GeneradorExpedientes(datosPaciente.getIdPaciente(), datosPaciente, expedienteDatos, expedienteComidas, expedienteMatriz);
-        String archivo = generador.generar();
+        String archivo = Configurador.getCfg("rutaWeb")+"expedientes"+Configurador.getCfg("delimitador")+generador.generar();
         Bean.ponerBean("vistaExpedienteBean", new VistaExpedienteBean(archivo));
     }
 

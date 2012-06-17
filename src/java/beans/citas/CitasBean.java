@@ -14,7 +14,6 @@ import java.util.List;
 import mail.EnviadorCorreos;
 import org.hibernate.criterion.Restrictions;
 import pojos.Cita;
-import pojos.Configuracion;
 import pojos.DatosDoctor;
 import pojos.DatosPaciente;
 import util.Funciones;
@@ -132,9 +131,7 @@ public class CitasBean {
 
     private void enviarCorreo() {
         String[] mensaje=formarMensaje();
-        List<Configuracion> tabla = dao.getTabla(Configuracion.class);
-        Collections.sort(tabla);
-        EnviadorCorreos enviador=new EnviadorCorreos(tabla.get(0).getValor(), tabla.get(1).getValor(), tabla.get(2).getValor());
+        EnviadorCorreos enviador=new EnviadorCorreos(Configurador.getCfg("enviadorCorreoSmtp"), Configurador.getCfg("enviadorCorreoRemitente"), Configurador.getCfg("enviadorCorreoPassword"),Configurador.getCfg("enviadorCorreoPuerto"));
         enviador.enviar(new String[]{cita.getDatosPaciente().getCorreo()},"CITA",mensaje);
     }
 

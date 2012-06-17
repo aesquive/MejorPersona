@@ -24,7 +24,7 @@ public class LectorConfiguracion {
             reader = new BufferedReader(new FileReader(rutaArchivo));
             String linea = reader.readLine();
             while (linea != null) {
-                String[] partido = linea.split("@");
+                String[] partido = linea.split("=");
                 mapeo.put(partido[0], partido[1]);
                 linea = reader.readLine();
             }
@@ -44,5 +44,7 @@ public class LectorConfiguracion {
     
     public static void main(String[] args) {
         LectorConfiguracion lec = new LectorConfiguracion();
+        String cfg = lec.getCfg("enviadorCorreoRemitente");
+        System.out.print(cfg);
     }
 }

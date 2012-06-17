@@ -3,19 +3,22 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 16/06/2012 12:08:16 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class name="pojos.Consulta" table="consulta" catalog="mejorpersona">
-        <id name="idConsulta" type="java.lang.Integer">
-            <column name="IdConsulta" />
+    <class name="pojos.Receta" table="receta" catalog="mejorpersona">
+        <id name="idReceta" type="java.lang.Integer">
+            <column name="IdReceta" />
             <generator class="identity" />
         </id>
-        <many-to-one name="datosDoctor" class="pojos.DatosDoctor" fetch="select">
-            <column name="IdDoctor" />
+        <many-to-one name="tipoReceta" class="pojos.TipoReceta" fetch="select">
+            <column name="IdTipoReceta" />
         </many-to-one>
         <many-to-one name="datosPaciente" class="pojos.DatosPaciente" fetch="select">
             <column name="IdPaciente" />
         </many-to-one>
-        <property name="fecha" type="timestamp">
-            <column name="Fecha" length="19" />
+        <property name="contenido" type="string">
+            <column name="Contenido" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="Fecha" length="10" />
         </property>
     </class>
 </hibernate-mapping>
