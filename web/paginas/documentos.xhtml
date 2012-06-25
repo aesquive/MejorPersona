@@ -5,15 +5,17 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Expediente Clinico</title>
     </h:head>
     <h:body>
+
+
+
+
         <p:layout fullPage="true">  
 
 
-            <p:layoutUnit position="south" size="28" resizable="false" closable="false" collapsible="false">  
-                <h:outputText style="font-size: smaller" value="Hecho por Alberto Emmanuel Esquivel Vega 02/05/2012." />  
-            </p:layoutUnit>  
+
 
             <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
                 <h:form>  
@@ -22,9 +24,6 @@
                         <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Citas" action="citas"/>
                         <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Recetas" action="recetas"/>
                         <h:commandLink value="Ver Documentacion" action="documentos"/>
-                        
-                        <br/>
-                        <br/>
                         <br/>
                         <br/>
                         <h:commandLink value="Cerrar Sesion" action="salir"/>
@@ -33,35 +32,44 @@
             </p:layoutUnit>  
 
             <p:layoutUnit position="center">
+
+
+
+
                 <h:form>
 
-                    <h:panelGrid columns="2" >
+
+                    <h:panelGrid columns="5">
+                        <h:outputText value="Paciente:"/>
+                        <p:selectOneMenu required="true" value="#{informacionPacienteBean.idPacienteElegido}">
+                            <f:selectItem itemValue="#{null}" itemLabel="--Seleccione--"/>
+                            <f:selectItems value="#{informacionPacienteBean.listaPacientes}" var="pac" itemLabel="#{pac.apePat} #{pac.apeMat} #{pac.nom}" itemValue="#{pac.idPaciente.toString()}"/>
+                            <p:ajax update="comboRecetas,pdf" listener="#{informacionPacienteBean.cambioPaciente}"/>
+                        </p:selectOneMenu>
 
 
-                        <h:panelGrid  columns="2">
-                            <h:outputText value="Paciente"/>
-                            <p:selectOneMenu value="#{informacionPacienteBean.idPacienteElegido}">
-                                <f:selectItem itemLabel="--Seleccione--" itemValue="#{null}"/>
-                                <f:selectItems value="#{informacionPacienteBean.listaPacientes}" var="pac" itemLabel="#{pac.apePat} #{pac.apeMat} #{pac.nom} " itemValue="#{pac.idPaciente.toString()}"/>
-                                <p:ajax update="listaPdf,pdfPanel" listener="#{informacionPacienteBean.cambioPaciente}"/>
-                            </p:selectOneMenu>
-                        </h:panelGrid>
 
-                        <h:panelGrid id="listaPdf" columns="3">
-                            <h:outputText value="Archivo"/>
-                            <p:selectOneMenu value="#{informacionPacienteBean.rutaPdfActual}">
-                                <f:selectItem itemLabel="--Seleccione--" itemValue="#{configuracionBean.rutaWeb}logo.pdf"/>
-                                <f:selectItems value="#{informacionPacienteBean.archivos}" var="arc" itemLabel="#{arc.x}" itemValue="#{arc.y}"/>
-                                <p:ajax update="pdfPanel" listener="#{informacionPacienteBean.cambioArchivo}"/>
-                            </p:selectOneMenu>
-                            <h:outputText value="    "/>
-                        </h:panelGrid>
+                        <h:outputText value="Tipo de Receta:"/>
+                        <p:selectOneMenu id="comboRecetas"  required="true" value="#{informacionPacienteBean.rutaPdfActual}">
+                            <f:selectItem itemValue="#{null}" itemLabel="--Seleccione--"/>
+                            <f:selectItems value="#{informacionPacienteBean.archivos}" var="tipRec" itemLabel="#{tipRec.x}" itemValue="#{tipRec.y}"/>
+                            <p:ajax update="pdf"  listener="#{informacionPacienteBean.cambioReceta}"/>
+                        </p:selectOneMenu>
 
                     </h:panelGrid>
-                    <h:panelGrid id="pdfPanel"  width="98%">
-                        <object width="75%" height="600px" type="application/pdf" data="#{informacionPacienteBean.rutaPdfActual}"/>
-                    </h:panelGrid>
+
+                    <center>
+                        <h:panelGrid  id="pdf"  columns="1">
+                            <object type="application/pdf" width="900px" height="600px" data="#{informacionPacienteBean.rutaPdfActual}"/>
+
+                        </h:panelGrid>
+
+                    </center>
+
+
+
                 </h:form>
+
             </p:layoutUnit>  
 
         </p:layout>  

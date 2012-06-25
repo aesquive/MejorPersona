@@ -8,12 +8,14 @@ package util;
  *
  * @author alberto
  */
-public class Vector<T0 ,T1>{
+public class Vector{
     
-    private T0 x;
-    private T1 y;
+    private int id;
+    private String x;
+    private String y;
     
-    public Vector(T0 x , T1 y){
+    public Vector(int id ,String x , String y){
+        this.id=id;
         this.x=x;
         this.y=y;
     }
@@ -21,29 +23,43 @@ public class Vector<T0 ,T1>{
     /**
      * @return the x
      */
-    public T0 getX() {
+    public String getX() {
         return x;
     }
 
     /**
      * @param x the x to set
      */
-    public void setX(T0 x) {
+    public void setX(String x) {
         this.x = x;
     }
 
     /**
      * @return the y
      */
-    public T1 getY() {
+    public String getY() {
         return y;
     }
 
     /**
      * @param y the y to set
      */
-    public void setY(T1 y) {
+    public void setY(String y) {
         this.y = y;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
     
 }

@@ -13,7 +13,7 @@
         <managed-bean-name>expedienteBean</managed-bean-name>
         <managed-bean-class>beans.expedientes.ExpedienteBean</managed-bean-class>
     
-        <managed-bean-scope>view</managed-bean-scope></managed-bean>
+        <managed-bean-scope>request</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>vistaExpedienteBean</managed-bean-name>
         <managed-bean-class>beans.expedientes.VistaExpedienteBean</managed-bean-class>
@@ -31,12 +31,12 @@
     <managed-bean>
         <managed-bean-name>citasBean</managed-bean-name>
         <managed-bean-class>beans.citas.CitasBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>informacionPacienteBean</managed-bean-name>
         <managed-bean-class>beans.informacion.InformacionPacienteBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
@@ -90,4 +90,9 @@
             <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <managed-bean>
+        <managed-bean-name>ortografiaBean</managed-bean-name>
+        <managed-bean-class>beans.OrtografiaBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

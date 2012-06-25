@@ -32,6 +32,7 @@ public class GeneradorRecetas {
     private String nombreArchivoNuevo;
     private String nombreArchivoBase;
     private PdfStamper stamper;
+    private PdfReader reader;
 
     public GeneradorRecetas(String nombreArchivoNuevo, String nombreArchivoBase) {
         this.nombreArchivoNuevo = nombreArchivoNuevo;
@@ -41,7 +42,7 @@ public class GeneradorRecetas {
 
     private void obtenerStamper() {
         try {
-            PdfReader reader = new PdfReader(rutaLocal + "baseRecetas" + delimitador + nombreArchivoBase);
+            this.reader = new PdfReader(rutaLocal + "baseRecetas" + delimitador + nombreArchivoBase);
             this.stamper = new PdfStamper(reader, new FileOutputStream(rutaLocal + "recetas" + delimitador + nombreArchivoNuevo));
         } catch (DocumentException ex) {
             Logger.getLogger(GeneradorRecetas.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,6 +61,7 @@ public class GeneradorRecetas {
                 posActualY-=12;
             }
             stamper.close();
+            reader.close();
             return Configurador.getCfg("rutaWeb") + "recetas"+delimitador + nombreArchivoNuevo;
         } catch (DocumentException ex) {
             Logger.getLogger(GeneradorRecetas.class.getName()).log(Level.SEVERE, null, ex);

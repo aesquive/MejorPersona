@@ -5,9 +5,39 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <script type="text/javascript" src="../js/ortografia.js"></script>
+        <script>
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+                dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+                dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D','L','M','X','J','V','S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText : 'Todo el día'
+            };
+        </script>
+        <title>Alta Expedientes</title>
     </h:head>
     <h:body>
+        
         <p:layout fullPage="true">  
 
 
@@ -47,28 +77,30 @@
                                     <p:column>
                                         <h:panelGrid columns="2">
                                             <h:outputText value="Apellido Paterno"/>
-                                            <p:inputText required="" value="#{expedienteBean.datosPaciente.apePat}"/>
+                                            <p:inputText required="true" id="apePat" onkeyup="soloLetras(this)" value="#{expedienteBean.datosPaciente.apePat}">
+                                            </p:inputText>
+                                            
                                             <h:outputText value="Apellido Materno"/>
-                                            <p:inputText required="" value="#{expedienteBean.datosPaciente.apeMat}"/>
+                                            <p:inputText required="true" onkeyup="soloLetras(this)" value="#{expedienteBean.datosPaciente.apeMat}"/>
                                             <h:outputText value="Nombre"/>
-                                            <p:inputText required="" value="#{expedienteBean.datosPaciente.nom}"/>
+                                            <p:inputText required="true" onkeyup="soloLetras(this)" value="#{expedienteBean.datosPaciente.nom}"/>
                                             <h:outputText value="Segundo Nombre"/>
-                                            <p:inputText  value="#{expedienteBean.datosPaciente.segNom}"/>
+                                            <p:inputText onkeyup="soloLetras(this)"  value="#{expedienteBean.datosPaciente.segNom}"/>
                                             <h:outputText value="Fecha de Nacimiento"/>
-                                            <p:calendar showOn="button" navigator="true" value="#{expedienteBean.datosPaciente.fecnac}"/>
+                                            <p:calendar showOn="button" locale="es" id="fecNac" navigator="true" title="Dar click en el boton para ver calendario" value="#{expedienteBean.datosPaciente.fecnac}"/>
                                         </h:panelGrid>
 
                                     </p:column>
                                     <p:column>
                                         <h:panelGrid columns="2" >
                                             <h:outputText value="Domicilio"/>
-                                            <p:inputTextarea cols="30" rows="5" autoResize="false" value="#{expedienteBean.datosPaciente.domicilio}"/>
+                                            <p:inputTextarea onkeyup="pasarMayusculas(this)" cols="30" rows="5" autoResize="false" value="#{expedienteBean.datosPaciente.domicilio}"/>
                                             <h:outputText value="Telefono"/>
-                                            <p:inputText value="#{expedienteBean.datosPaciente.tel}"/>
+                                            <p:inputText onkeyup="soloNumeros(this)" value="#{expedienteBean.datosPaciente.tel}"/>
                                             <h:outputText value="Celular"/>
-                                            <p:inputText  value="#{expedienteBean.datosPaciente.cel}"/>
+                                            <p:inputText onkeyup="soloNumeros(this)" value="#{expedienteBean.datosPaciente.cel}"/>
                                             <h:outputText value="E-mail"/>
-                                            <p:inputText  value="#{expedienteBean.datosPaciente.correo}"/>
+                                            <p:inputText   value="#{expedienteBean.datosPaciente.correo}"/>
 
                                         </h:panelGrid>
                                     </p:column>
@@ -81,18 +113,18 @@
                                 <h:panelGrid columns="2">
                                     <p:column>
                                         <h:panelGrid columns="2">
-                                            <h:outputText value="Edad de comienzo de la obesidad"/>
-                                            <p:inputText value="#{expedienteBean.expedienteDatos.edaComObe}"/>
+                                            <h:outputText  value="Edad de comienzo de la obesidad"/>
+                                            <p:inputText onkeyup="soloNumeros(this)" value="#{expedienteBean.expedienteDatos.edaComObe}"/>
                                             <h:outputText value="Evento disparador de la obesidad"/>
-                                            <p:inputText value="#{expedienteBean.expedienteDatos.evtDisObe}"/>
+                                            <p:inputText onkeyup="pasarMayusculas(this)" value="#{expedienteBean.expedienteDatos.evtDisObe}"/>
                                         </h:panelGrid>
                                     </p:column>
                                     <p:column>
                                         <h:panelGrid columns="2">
                                             <h:outputText value="Tratamientos Previos"/>
-                                            <p:inputTextarea cols="30" rows="5" autoResize="false" value="#{expedienteBean.expedienteDatos.tratPrev}"/>
+                                            <p:inputTextarea onkeyup="pasarMayusculas(this)" cols="30" rows="5" autoResize="false" value="#{expedienteBean.expedienteDatos.tratPrev}"/>
                                             <h:outputText value="Medicamento tomado actualmente"/>
-                                            <p:inputText value="#{expedienteBean.expedienteDatos.medAct}"/>
+                                            <p:inputText onkeyup="pasarMayusculas(this)" value="#{expedienteBean.expedienteDatos.medAct}"/>
                                         </h:panelGrid>
                                     </p:column>
                                 </h:panelGrid>
@@ -100,10 +132,10 @@
                                 <p:separator/>
                                 <h:panelGrid columns="3">
                                     <h:outputText value="Peso Inicial"/>
-                                    <p:inputText value="#{expedienteBean.expedienteDatos.pesoInicial}"/>
+                                    <p:inputText onkeyup="soloNumerosYPunto(this)" value="#{expedienteBean.expedienteDatos.pesoInicial}"/>
                                     <h:outputText value="Kg"/>
                                     <h:outputText value="Talla"/>
-                                    <p:inputText value="#{expedienteBean.expedienteDatos.talla}"/>
+                                    <p:inputText onkeyup="soloNumerosYPunto(this)" value="#{expedienteBean.expedienteDatos.talla}"/>
                                     <h:outputText value="m"/>
                                     <h:outputText value="Estructura Osea"/>
                                     <p:selectOneMenu value="#{expedienteBean.expedienteDatos.estructuraOsea}">
@@ -113,20 +145,20 @@
                                     </p:selectOneMenu>
                                     <h:outputText value=" "/>
                                     <h:outputText value="Peso Ideal"/>
-                                    <p:inputText value="#{expedienteBean.expedienteDatos.pesoIdeal}"/>
+                                    <p:inputText onkeyup="soloNumerosYPunto(this)" value="#{expedienteBean.expedienteDatos.pesoIdeal}"/>
                                     <h:outputText value="Kg"/>
                                 </h:panelGrid>
 
                                 <p:separator/>
                                 <h:panelGrid columns="3">
                                     <h:outputText value="Cadera"/>
-                                    <p:inputText value="#{expedienteBean.expedienteDatos.cadera}"/>
+                                    <p:inputText onkeyup="soloNumerosYPunto(this)" value="#{expedienteBean.expedienteDatos.cadera}"/>
                                     <h:outputText value="cm"/>
                                     <h:outputText value="Cintura"/>
-                                    <p:inputText value="#{expedienteBean.expedienteDatos.cintura}"/>
+                                    <p:inputText onkeyup="soloNumerosYPunto(this)" value="#{expedienteBean.expedienteDatos.cintura}"/>
                                     <h:outputText value="cm"/>
                                     <h:outputText value="Pecho"/>
-                                    <p:inputText value="#{expedienteBean.expedienteDatos.busto}"/>
+                                    <p:inputText onkeyup="soloNumerosYPunto(this)" value="#{expedienteBean.expedienteDatos.busto}"/>
                                     <h:outputText value="cm"/>
                                 </h:panelGrid>
                             </p:panel>
@@ -319,12 +351,12 @@
 
                                 <h:panelGrid columns="2">
                                     <p:column>
-                                        <p:inputTextarea autoResize="false" cols="30" rows="5" value="#{expedienteBean.expedienteComidas.desDesayuno}"/>
+                                        <p:inputTextarea onkeyup="pasarMayusculas(this)" autoResize="false" cols="30" rows="5" value="#{expedienteBean.expedienteComidas.desDesayuno}"/>
                                     </p:column>
                                     <p:column>
                                         <h:panelGrid columns="2">
                                             <h:outputText value="Lugar"/>
-                                            <p:inputText value="#{expedienteBean.expedienteComidas.lugDesayuno}"/>
+                                            <p:inputText onkeyup="pasarMayusculas(this)" value="#{expedienteBean.expedienteComidas.lugDesayuno}"/>
                                             <h:outputText value="Come Solo : "/>
                                             <p:selectOneMenu value="#{expedienteBean.expedienteComidas.comeSoloDesayuno}">
                                                 <f:selectItem itemLabel="Si" itemValue="Si"/>
@@ -332,7 +364,7 @@
                                             </p:selectOneMenu>
                                             <h:outputText value="Hora "/>
                                             <h:panelGrid columns="4">
-                                                <p:spinner min="1" max="24" stepFactor="1" value="#{expedienteBean.hrsDesayuno}"/>
+                                                <p:spinner  min="1" max="24" stepFactor="1" value="#{expedienteBean.hrsDesayuno}"/>
                                                 <h:outputText value="hrs"/>
                                                 <p:spinner min="0" max="59" stepFactor="1" value="#{expedienteBean.minsDesayuno}"/>
                                                 <h:outputText value="mins"/>
@@ -347,12 +379,12 @@
 
                                 <h:panelGrid columns="2">
                                     <p:column>
-                                        <p:inputTextarea autoResize="false" cols="30" rows="5" value="#{expedienteBean.expedienteComidas.desComida}"/>
+                                        <p:inputTextarea onkeyup="pasarMayusculas(this)" autoResize="false" cols="30" rows="5" value="#{expedienteBean.expedienteComidas.desComida}"/>
                                     </p:column>
                                     <p:column>
                                         <h:panelGrid columns="2">
                                             <h:outputText value="Lugar"/>
-                                            <p:inputText value="#{expedienteBean.expedienteComidas.lugComida}"/>
+                                            <p:inputText onkeyup="pasarMayusculas(this)" value="#{expedienteBean.expedienteComidas.lugComida}"/>
                                             <h:outputText value="Come Solo : "/>
                                             <p:selectOneMenu value="#{expedienteBean.expedienteComidas.comeSoloComida}">
                                                 <f:selectItem itemLabel="Si" itemValue="Si"/>
@@ -375,12 +407,12 @@
 
                                 <h:panelGrid columns="2">
                                     <p:column>
-                                        <p:inputTextarea autoResize="false" cols="30" rows="5" value="#{expedienteBean.expedienteComidas.desCena}"/>
+                                        <p:inputTextarea onkeyup="pasarMayusculas(this)" autoResize="false" cols="30" rows="5" value="#{expedienteBean.expedienteComidas.desCena}"/>
                                     </p:column>
                                     <p:column>
                                         <h:panelGrid columns="2">
                                             <h:outputText value="Lugar"/>
-                                            <p:inputText value="#{expedienteBean.expedienteComidas.lugCena}"/>
+                                            <p:inputText onkeyup="pasarMayusculas(this)" value="#{expedienteBean.expedienteComidas.lugCena}"/>
                                             <h:outputText value="Come Solo : "/>
                                             <p:selectOneMenu value="#{expedienteBean.expedienteComidas.comeSoloCena}">
                                                 <f:selectItem itemLabel="Si" itemValue="Si"/>

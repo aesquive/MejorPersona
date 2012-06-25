@@ -253,14 +253,16 @@ public class RecetasBean {
             borrarArchivo(rutaPdf);
             Integer id = dao.guardar(receta);
             guardarPdf(id);
+            
+            dao.refrescarPaciente(dao.getPaciente(Integer.parseInt(idPacienteSeleccionado)));
             return "recetas";
         }
         return null;
     }
 
     private void borrarArchivo(String rutaPdf) {
-        File f=new File(rutaPdf);
-        f.delete();
+        File f=new File(Configurador.getCfg("rutaLocal")+"recetas"+Configurador.getCfg("delimitador")+"tmp"+idPacienteSeleccionado+".pdf");
+        boolean delete = f.delete();
     }
 
     private void guardarPdf(Integer id) {

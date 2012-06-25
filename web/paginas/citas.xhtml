@@ -5,7 +5,35 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <script>
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+                dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+                dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D','L','M','X','J','V','S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText : 'Todo el día'
+            };
+        </script>
+        <title>Citas</title>
     </h:head>
     <h:body>
         <p:layout fullPage="true">  
@@ -33,26 +61,16 @@
 
             <p:layoutUnit position="center">
 
+                <h:form>
 
-                <p:schedule id="sche" minTime="7" maxTime="22" showHeader="true"  allDaySlot="false"   resizable="false" view="agendaDay"  style="position: absolute; left: 0% ;width: 70%;height: 50%" value="#{agendaBean.agenda}">
+                    <p:schedule    locale="es" id="sche" minTime="7" maxTime="22" showHeader="true"   allDaySlot="false"   resizable="false" view="agendaDay"  style="position: absolute; left: 0% ;width: 70%;height: 50%" value="#{agendaBean.agenda}">
 
-                    <p:ajax event="eventSelect" listener="#{agendaBean.seleccionEvento}" 
-                            update="cuaVer" oncomplete="dlgVer.show()"/>
+                        <p:ajax event="eventMove" listener="#{agendaBean.eventMove}"    />
+                    </p:schedule>
 
-                </p:schedule>
+                </h:form>
 
-                <p:dialog header="Ver Cita" widgetVar="dlgVer" showEffect="puff" resizable="false" hideEffect="puff" >  
-                    <h:panelGrid  id="cuaVer" columns="2">
-                        <h:outputText value="Paciente:"/>
-                        <h:outputText  value="#{agendaBean.eventoSeleccionado.title}"/>
-                        <h:outputText value="Inicio:"/>
-                        <p:calendar readonly="true" minHour="7" maxHour="22"  value="#{agendaBean.eventoSeleccionado.startDate}" pattern="dd/MM/yyyy HH:mm"/>
-                        <h:outputText value="Fin:"/>
-                        <p:calendar readonly="true" minHour="7" maxHour="22" value="#{agendaBean.eventoSeleccionado.endDate}" pattern="dd/MM/yyyy HH:mm"/>
-
-                    </h:panelGrid>
-
-                </p:dialog>  
+                
 
 
                 <h:panelGrid columns="2" style="position: absolute;right: 10%; top: 10%">

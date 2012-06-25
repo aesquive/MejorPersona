@@ -92,4 +92,10 @@ public class Dao {
         beginTransaction.commit();
         return (Integer) save;
     }
+    
+
+    public void refrescarPaciente(Object o) {
+        System.out.println("refrescando a "+o);
+        sesion.refresh(o);
+    }
 }

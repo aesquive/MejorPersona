@@ -5,16 +5,12 @@ import beans.Bean;
 import beans.login.LoginBean;
 import configuradores.Configurador;
 import documentadores.expedientes.GeneradorExpedientes;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.faces.event.AjaxBehaviorEvent;
 import pojos.*;
 import util.Funciones;
 import util.Vector;
@@ -27,23 +23,20 @@ public class InformacionPacienteBean {
 
     private final String rutaServidor = Configurador.getCfg("rutaWeb");
     private final String ruta = Configurador.getCfg("rutaLocal");
-    private final String delimitador=Configurador.getCfg("delimitador");
-    
+    private final String delimitador = Configurador.getCfg("delimitador");
     private String idPacienteElegido;
     private DatosPaciente pacienteActual;
     private List<DatosPaciente> listaPacientes;
-    private List<Vector<String, String>> archivos;
+    private List<Vector> archivos;
     private Dao dao;
     private String rutaPdfActual;
     private LoginBean loginBean;
 
-    
-    
     public InformacionPacienteBean() {
         dao = new Dao();
         loginBean = (LoginBean) Bean.getBean("loginBean");
         generarListaPacientes();
-        rutaPdfActual = rutaServidor + "logo.pdf";
+        rutaPdfActual=Configurador.getCfg("rutaWeb")+"logo.pdf";
     }
 
     private void generarListaPacientes() {
@@ -63,12 +56,12 @@ public class InformacionPacienteBean {
 
     private void generarArchivos() {
 
-        archivos = new LinkedList<Vector<String, String>>();
+        archivos = new LinkedList<Vector>();
         if (this.getPacienteActual() == null) {
             return;
         }
-        String rutaExpediente = obtenerRutaExpediente(ruta + "expedientes"+delimitador);
-        getArchivos().add(new Vector<String, String>("Expediente", rutaServidor + "expedientes"+delimitador + rutaExpediente));
+        String rutaExpediente = obtenerRutaExpediente(ruta + "expedientes" + delimitador);
+        getArchivos().add(new Vector(0, "Expediente", rutaServidor + "expedientes" + delimitador + rutaExpediente));
         this.rutaPdfActual = archivos.get(0).getY();
         generarRecetas();
     }
@@ -84,14 +77,6 @@ public class InformacionPacienteBean {
                     (ExpedienteDatos) getPacienteActual().getExpedienteDatoses().iterator().next(), (ExpedienteComidas) getPacienteActual().getExpedienteComidases().iterator().next(), (ExpedienteMatriz) getPacienteActual().getExpedienteMatrizs().iterator().next());
             String generar = generador.generar();
             return generar;
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            FileReader reader = new FileReader("/var/www/private/expedientes/1.pdf");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(InformacionPacienteBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -141,14 +126,14 @@ public class InformacionPacienteBean {
     /**
      * @return the archivos
      */
-    public List<Vector<String, String>> getArchivos() {
+    public List<Vector> getArchivos() {
         return archivos;
     }
 
     /**
      * @param archivos the archivos to set
      */
-    public void setArchivos(List<Vector<String, String>> archivos) {
+    public void setArchivos(List<Vector> archivos) {
         this.archivos = archivos;
     }
 
@@ -166,30 +151,40 @@ public class InformacionPacienteBean {
         this.idPacienteElegido = idPacienteElegido;
     }
 
-    public void cambioArchivo() {
-        System.out.println("cambiando el archivo");
-    }
-
     public void cambioPaciente() {
-        this.rutaPdfActual = rutaServidor + "logo.pdf";
         if (getIdPacienteElegido() != null && !idPacienteElegido.equals("")) {
             this.pacienteActual = dao.getPaciente(Integer.parseInt(getIdPacienteElegido()));
             System.out.println("el idelegido es " + getIdPacienteElegido());
             System.out.println("puse ya al paciente actual");
             generarArchivos();
+            
+        this.rutaPdfActual = rutaServidor + "logo.pdf";
             System.out.println("los archivos son " + archivos.size());
             return;
         }
-        archivos = new LinkedList<Vector<String, String>>();
+        archivos = new LinkedList<Vector>();
 
     }
-
+    
     private void generarRecetas() {
         Set<Receta> recetas = pacienteActual.getRecetas();
-        for(Receta rec:recetas){
-            String nombre ="Receta ("+Funciones.DateToString(rec.getFecha())+")";
-            String rutaArc=Configurador.getCfg("rutaWeb")+"recetas"+delimitador+rec.getIdReceta()+".pdf";
-            archivos.add(new Vector<String, String>(nombre, rutaArc));
+        int indice = 1;
+        for (Receta rec : recetas) {
+            String nombre = "Receta (" + Funciones.DateToString(rec.getFecha()) + ")";
+            String rutaArc = Configurador.getCfg("rutaWeb") + "recetas" + delimitador + rec.getIdReceta() + ".pdf";
+            System.out.println("la ruta de la receta es " + rutaArc);
+            archivos.add(new Vector(indice++, nombre, rutaArc));
         }
     }
+
+    public String buscarArchivo(){
+        System.out.println("la ruta del pdf actual es "+rutaPdfActual);
+        System.out.println("el paciente es "+idPacienteElegido);
+        return "";
+    }
+    
+    public void cambioReceta(){
+        System.out.println("hizo el cambio de documento");
+    }
+    
 }

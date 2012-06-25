@@ -8,11 +8,9 @@ import base.Dao;
 import beans.Bean;
 import beans.login.LoginBean;
 import java.util.*;
+import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntrySelectEvent;
-import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.DefaultScheduleModel;
-import org.primefaces.model.ScheduleEvent;
-import org.primefaces.model.ScheduleModel;
+import org.primefaces.model.*;
 import pojos.Cita;
 import pojos.DatosDoctor;
 
@@ -24,12 +22,9 @@ public class AgendaBean extends Bean{
 
     private ScheduleModel agenda;
     private DatosDoctor datosDoctor;
-    private TimeZone timeZone;
-    private ScheduleEvent eventoSeleccionado;
     
     /** Creates a new instance of AgendaBean */
     public AgendaBean() {
-        eventoSeleccionado=new DefaultScheduleEvent();
         
         datosDoctor=((LoginBean)Bean.getBean("loginBean")).getDatosDoctor();
         List<ScheduleEvent> eventos = obtenerEventos(datosDoctor);
@@ -84,39 +79,10 @@ public class AgendaBean extends Bean{
         agenda=new DefaultScheduleModel(lista);
     }
 
-    public void seleccionEvento(ScheduleEntrySelectEvent event){
-        System.out.println("entro a ver el evento seleccion");
-        eventoSeleccionado=new DefaultScheduleEvent("Titulo", Calendar.getInstance().getTime()  ,Calendar.getInstance().getTime());
-        this.eventoSeleccionado=event.getScheduleEvent();
-        System.out.println("el evento es "+eventoSeleccionado);
-        System.out.println("tiene "+eventoSeleccionado.getTitle());
-    }
     
-    /**
-     * @return the timeZone
-     */
-    public TimeZone getTimeZone() {
-        return timeZone;
-    }
-
-    /**
-     * @param timeZone the timeZone to set
-     */
-    public void setTimeZone(TimeZone timeZone) {
-        this.timeZone = timeZone;
-    }
-
-    /**
-     * @return the eventoSeleccionado
-     */
-    public ScheduleEvent getEventoSeleccionado() {
-        return eventoSeleccionado;
-    }
-
-    /**
-     * @param eventoSeleccionado the eventoSeleccionado to set
-     */
-    public void setEventoSeleccionado(ScheduleEvent eventoSeleccionado) {
-        this.eventoSeleccionado = eventoSeleccionado;
-    }
+   public void eventMove(ScheduleEntryMoveEvent event){
+       System.out.println("movi el evento");
+   }
+    
+   
 }
