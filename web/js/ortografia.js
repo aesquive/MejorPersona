@@ -2,6 +2,11 @@ function soloLetras(campo){
     var valor=campo.value;
     var principio=valor.substr(0, valor.length-1);
     var ultimaLetra=valor.substr(valor.length-1, valor.length);
+    if(ultimaLetra==" "){
+        
+        campo.value=campo.value.toUpperCase();
+        return;
+    }
     var bool=esNumero(ultimaLetra);
     if(bool){
         campo.value=principio;

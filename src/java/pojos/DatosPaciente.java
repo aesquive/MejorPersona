@@ -1,5 +1,5 @@
 package pojos;
-// Generated 16/06/2012 12:08:15 AM by Hibernate Tools 3.2.1.GA
+// Generated 25/06/2012 06:37:10 PM by Hibernate Tools 3.2.1.GA
 
 import java.util.Date;
 import java.util.HashSet;
@@ -15,13 +15,15 @@ public class DatosPaciente implements java.io.Serializable, Comparable {
     private String apeMat;
     private String nom;
     private String segNom;
+    private Date fecNac;
     private String tel;
     private String cel;
     private String domicilio;
     private String correo;
     private byte[] foto;
     private String usuario;
-    private Date fecnac;
+    private String password;
+    private String tema;
     private Set expedienteDatoses = new HashSet(0);
     private Set consultas = new HashSet(0);
     private Set recetas = new HashSet(0);
@@ -32,25 +34,32 @@ public class DatosPaciente implements java.io.Serializable, Comparable {
     public DatosPaciente() {
     }
 
-    public DatosPaciente(String usuario) {
-        this.usuario = usuario;
+    public DatosPaciente(String password, String tema) {
+        this.password = password;
+        this.tema = tema;
     }
 
-    public DatosPaciente(String apePat, String apeMat, String nom, String segNom, String tel, String cel, String domicilio, String correo, byte[] foto, String usuario, Date fecnac) {
+    public DatosPaciente(String apePat, String apeMat, String nom, String segNom, Date fecNac, String tel, String cel, String domicilio, String correo, byte[] foto, String usuario, String password, String tema, Set expedienteDatoses, Set consultas, Set recetas, Set expedienteMatrizs, Set citas, Set expedienteComidases) {
         this.apePat = apePat;
         this.apeMat = apeMat;
         this.nom = nom;
         this.segNom = segNom;
+        this.fecNac = fecNac;
         this.tel = tel;
         this.cel = cel;
         this.domicilio = domicilio;
         this.correo = correo;
         this.foto = foto;
         this.usuario = usuario;
-        this.fecnac = fecnac;
+        this.password = password;
+        this.tema = tema;
+        this.expedienteDatoses = expedienteDatoses;
+        this.consultas = consultas;
+        this.recetas = recetas;
+        this.expedienteMatrizs = expedienteMatrizs;
+        this.citas = citas;
+        this.expedienteComidases = expedienteComidases;
     }
-
-    
 
     public Integer getIdPaciente() {
         return this.idPaciente;
@@ -90,6 +99,14 @@ public class DatosPaciente implements java.io.Serializable, Comparable {
 
     public void setSegNom(String segNom) {
         this.segNom = segNom;
+    }
+
+    public Date getFecNac() {
+        return this.fecNac;
+    }
+
+    public void setFecNac(Date fecNac) {
+        this.fecNac = fecNac;
     }
 
     public String getTel() {
@@ -138,6 +155,22 @@ public class DatosPaciente implements java.io.Serializable, Comparable {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTema() {
+        return this.tema;
+    }
+
+    public void setTema(String tema) {
+        this.tema = tema;
     }
 
     public Set getExpedienteDatoses() {
@@ -192,19 +225,5 @@ public class DatosPaciente implements java.io.Serializable, Comparable {
     public int compareTo(Object t) {
         DatosPaciente cast = (DatosPaciente) t;
         return this.apePat.compareTo(cast.apePat);
-    }
-
-    /**
-     * @return the fecnac
-     */
-    public Date getFecnac() {
-        return fecnac;
-    }
-
-    /**
-     * @param fecnac the fecnac to set
-     */
-    public void setFecnac(Date fecnac) {
-        this.fecnac = fecnac;
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 16/06/2012 12:08:16 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 25/06/2012 06:37:11 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="pojos.DatosPaciente" table="datos_paciente" catalog="mejorpersona">
         <id name="idPaciente" type="java.lang.Integer">
@@ -20,6 +20,9 @@
         <property name="segNom" type="string">
             <column name="SegNom" />
         </property>
+        <property name="fecNac" type="date">
+            <column name="FecNac" length="10" />
+        </property>
         <property name="tel" type="string">
             <column name="Tel" />
         </property>
@@ -36,10 +39,13 @@
             <column name="Foto" />
         </property>
         <property name="usuario" type="string">
-            <column name="Usuario" not-null="true" />
+            <column name="Usuario" />
         </property>
-        <property name="fecnac" type="date">
-            <column name="FecNac" length="10" />
+        <property name="password" type="string">
+            <column name="Password" not-null="true" />
+        </property>
+        <property name="tema" type="string">
+            <column name="Tema" not-null="true" />
         </property>
         <set name="expedienteDatoses" inverse="true">
             <key>

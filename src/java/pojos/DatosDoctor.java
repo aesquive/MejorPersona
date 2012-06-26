@@ -1,5 +1,5 @@
 package pojos;
-// Generated 16/06/2012 12:08:15 AM by Hibernate Tools 3.2.1.GA
+// Generated 25/06/2012 06:37:10 PM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.HashSet;
@@ -18,6 +18,7 @@ public class DatosDoctor  implements java.io.Serializable {
      private String segNom;
      private String usu;
      private String pas;
+     private String tema;
      private Set tipoRecetas = new HashSet(0);
      private Set consultas = new HashSet(0);
      private Set citas = new HashSet(0);
@@ -25,13 +26,18 @@ public class DatosDoctor  implements java.io.Serializable {
     public DatosDoctor() {
     }
 
-    public DatosDoctor(String apePat, String apeMat, String nom, String segNom, String usu, String pas, Set tipoRecetas, Set consultas, Set citas) {
+	
+    public DatosDoctor(String tema) {
+        this.tema = tema;
+    }
+    public DatosDoctor(String apePat, String apeMat, String nom, String segNom, String usu, String pas, String tema, Set tipoRecetas, Set consultas, Set citas) {
        this.apePat = apePat;
        this.apeMat = apeMat;
        this.nom = nom;
        this.segNom = segNom;
        this.usu = usu;
        this.pas = pas;
+       this.tema = tema;
        this.tipoRecetas = tipoRecetas;
        this.consultas = consultas;
        this.citas = citas;
@@ -85,6 +91,13 @@ public class DatosDoctor  implements java.io.Serializable {
     
     public void setPas(String pas) {
         this.pas = pas;
+    }
+    public String getTema() {
+        return this.tema;
+    }
+    
+    public void setTema(String tema) {
+        this.tema = tema;
     }
     public Set getTipoRecetas() {
         return this.tipoRecetas;

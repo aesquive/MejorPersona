@@ -9,6 +9,9 @@
     <h:body>
         <p:layout fullPage="true">  
 
+            
+            <p:layoutUnit rendered="#{loginBean.mostrarMensaje}" position="north" size="40" header="#{loginBean.mensaje}" resizable="false" closable="false" collapsible="false">  
+            </p:layoutUnit>
 
             <p:layoutUnit position="south" size="28" resizable="false" closable="false" collapsible="false">  
                 <h:outputText style="font-size: smaller" value="Hecho por Alberto Emmanuel Esquivel Vega 02/05/2012." />  

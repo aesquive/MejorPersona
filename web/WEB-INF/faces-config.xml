@@ -22,7 +22,7 @@
     <managed-bean>
         <managed-bean-name>agendaBean</managed-bean-name>
         <managed-bean-class>beans.citas.AgendaBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+        <managed-bean-scope>view</managed-bean-scope></managed-bean>
     <managed-bean>
         <managed-bean-name>loginBean</managed-bean-name>
         <managed-bean-class>beans.login.LoginBean</managed-bean-class>
@@ -95,4 +95,16 @@
         <managed-bean-class>beans.OrtografiaBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>configuracionUsuario</managed-bean-name>
+        <managed-bean-class>beans.config.ConfiguracionUsuario</managed-bean-class>
+    
+        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+    <navigation-rule>
+        <from-view-id>/paginas/configuracion.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>salir</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

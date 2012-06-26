@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import pojos.Cita;
 import pojos.DatosPaciente;
 import pojos.Receta;
 import pojos.TipoReceta;
@@ -29,6 +30,12 @@ public class Dao {
     public void guardarActualizar(Object objeto) {
         Transaction trans = sesion.beginTransaction();
         sesion.saveOrUpdate(objeto);
+        trans.commit();
+    }
+    
+    public void actualizar(Object objeto) {
+        Transaction trans = sesion.beginTransaction();
+        sesion.update(objeto);
         trans.commit();
     }
 
@@ -98,4 +105,12 @@ public class Dao {
         System.out.println("refrescando a "+o);
         sesion.refresh(o);
     }
+
+    public void eliminar(Object o) {
+        Transaction beginTransaction = sesion.beginTransaction();
+        sesion.delete(o);
+        beginTransaction.commit();
+        System.out.println("objeto eliminado");
+    }
+
 }

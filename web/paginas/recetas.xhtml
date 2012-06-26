@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>Expediente Clinico</title>
+        <title>Recetas</title>
     </h:head>
     <h:body>
 
@@ -14,7 +14,8 @@
 
         <p:layout fullPage="true">  
 
-
+            <p:layoutUnit rendered="#{loginBean.mostrarMensaje}" position="north" size="40" header="#{loginBean.mensaje}" resizable="false" closable="false" collapsible="false">  
+            </p:layoutUnit>
 
 
             <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
@@ -24,6 +25,9 @@
                         <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Citas" action="citas"/>
                         <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Recetas" action="recetas"/>
                         <h:commandLink value="Ver Documentacion" action="documentos"/>
+                        <br/>
+                        <br/>
+                        <h:commandLink value="Configuracion" action="configuracion"/>
                         <br/>
                         <br/>
                         <h:commandLink value="Cerrar Sesion" action="salir"/>

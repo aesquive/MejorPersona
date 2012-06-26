@@ -14,7 +14,7 @@
                 monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
                 dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
                 dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-                dayNamesMin: ['D','L','M','X','J','V','S'],
+                dayNamesMin: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
                 weekHeader: 'Semana',
                 firstDay: 1,
                 isRTL: false,
@@ -23,8 +23,8 @@
                 timeOnlyTitle: 'Sólo hora',
                 timeText: 'Tiempo',
                 hourText: 'Hora',
-                minuteText: 'Minuto',
-                secondText: 'Segundo',
+                minuteText: 'Minutos',
+                secondText: 'Segundos',
                 currentText: 'Fecha actual',
                 ampm: false,
                 month: 'Mes',
@@ -38,6 +38,8 @@
     <h:body>
         <p:layout fullPage="true">  
 
+            <p:layoutUnit rendered="#{loginBean.mostrarMensaje}" position="north" size="40" header="#{loginBean.mensaje}" resizable="false" closable="false" collapsible="false">  
+            </p:layoutUnit>
 
             <p:layoutUnit position="south" size="28" resizable="false" closable="false" collapsible="false">  
                 <h:outputText style="font-size: smaller" value="Hecho por Alberto Emmanuel Esquivel Vega 02/05/2012." />  
@@ -54,6 +56,9 @@
                         <br/>
                         <br/>
                         <br/>
+                        <h:commandLink value="Configuracion" action="configuracion"/>
+                        <br/>
+                        <br/>
                         <h:commandLink value="Cerrar Sesion" action="salir"/>
                     </h:panelGrid>
                 </h:form>  
@@ -61,22 +66,24 @@
 
             <p:layoutUnit position="center">
 
-                <h:form>
 
-                    <p:schedule    locale="es" id="sche" minTime="7" maxTime="22" showHeader="true"   allDaySlot="false"   resizable="false" view="agendaDay"  style="position: absolute; left: 0% ;width: 70%;height: 50%" value="#{agendaBean.agenda}">
+                <p:schedule draggable="false"    locale="es" id="sche" minTime="7" maxTime="22" showHeader="true"   allDaySlot="false"   resizable="false" view="agendaDay"  style="position: absolute; left: 0% ;width: 70%;height: 50%" value="#{agendaBean.agenda}">
 
-                        <p:ajax event="eventMove" listener="#{agendaBean.eventMove}"    />
-                    </p:schedule>
-
-                </h:form>
-
-                
+                </p:schedule>
 
 
-                <h:panelGrid columns="2" style="position: absolute;right: 10%; top: 10%">
+
+
+
+                <h:panelGrid columns="2"  style="position: absolute;right: 10%; top: 10%">
                     <h:commandButton type="button" style="width: 40px;height: 40px" onclick="dlg.show();" image="#{configuracionBean.rutaWeb}imagenes#{configuracionBean.delimitador}add.png" value="BOTON"/>
-                    <h:outputText value="Alta" />
+                    <h:outputText value="Agregar" />
+                    <h:outputText value=" "/>
+                    <h:outputText value=" "/>
+                    <h:commandButton type="button" style="width: 40px;height: 40px" onclick="dlgElim.show();" image="#{configuracionBean.rutaWeb}imagenes#{configuracionBean.delimitador}remove.png" value="BOTON"/>
+                    <h:outputText value="Eliminar" />
                 </h:panelGrid>
+
 
 
             </p:layoutUnit>  
@@ -88,17 +95,17 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputText value="Paciente:"/>
-                    <p:selectOneMenu value="#{citasBean.idSeleccionado}">
-                        <f:selectItem itemValue="#{-1}" itemLabel="Seleccionar un Paciente"/>
+                    <p:selectOneMenu  value="#{citasBean.idSeleccionado}">
                         <f:selectItems value="#{citasBean.pacientes}" var="paciente" itemLabel="#{paciente.apePat} #{paciente.nom}"
                                        itemValue="#{paciente.idPaciente}"/>
+
                     </p:selectOneMenu>
 
                     <h:outputText value="Inicio:"/>
-                    <p:calendar minHour="7" maxHour="22"  value="#{citasBean.cita.fechaInicial}" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:calendar minHour="7"  locale="es" maxHour="22"  value="#{citasBean.cita.fechaInicial}" pattern="dd/MM/yyyy HH:mm"/>
 
                     <h:outputText value="Fin:"/>
-                    <p:calendar minHour="7" maxHour="22" value="#{citasBean.cita.fechaFinal}" pattern="dd/MM/yyyy HH:mm"/>
+                    <p:calendar minHour="7" locale="es"  maxHour="22" value="#{citasBean.cita.fechaFinal}" pattern="dd/MM/yyyy HH:mm"/>
 
                     <h:outputText value="Comentarios"/>
 
@@ -111,6 +118,26 @@
         </p:dialog>  
 
 
+        <p:dialog header="Eliminar Cita" widgetVar="dlgElim" showEffect="puff" resizable="false" hideEffect="puff" >  
+
+            <h:form>
+                <h:panelGrid columns="2" >
+                    <h:outputText value="Dia :"/>
+                    <p:calendar  showOn="button" value="#{agendaBean.fechaSeleccionada}" locale="es">
+                        <p:ajax event="dateSelect" listener="#{agendaBean.fechaEliminarSeleccionada}" update="comboCitas"/>
+                    </p:calendar>
+                </h:panelGrid>
+                <h:panelGrid columns="2" id="comboCitas">
+                    <h:outputText value="Paciente :"/>
+                    <p:selectOneMenu  value="#{agendaBean.idCitaEliminar}">
+                        <f:selectItems value="#{agendaBean.citasFiltradas}" var="citaFil" itemLabel="#{citaFil.datosPaciente.apePat} #{citaFil.datosPaciente.apeMat} #{citaFil.datosPaciente.nom} ( Dr(a). #{citaFil.datosDoctor.apePat} #{citaFil.datosDoctor.nom})"
+                                       itemValue="#{citaFil.idCita.intValue()}"/>
+                        <p:ajax listener="#{agendaBean.comboCitaEliminadaCambio}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                <h:commandButton value="Eliminar Cita" action="#{agendaBean.eliminarCita}"/>
+            </h:form>
+        </p:dialog>  
 
 
 

@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Acceso MejorPersona</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">  
+
+
+            <p:layoutUnit rendered="#{loginBean.mostrarMensaje}" position="north" size="40" header="#{loginBean.mensaje}" resizable="false" closable="false" collapsible="false">  
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="28" resizable="false" closable="false" collapsible="false">  
+                <h:outputText style="font-size: smaller" value="Hecho por Alberto Emmanuel Esquivel Vega 02/05/2012." />  
+            </p:layoutUnit>  
+
+
+            <p:layoutUnit position="west" size="200" header="Acciones" resizable="false" closable="false" collapsible="true">  
+                <h:form>  
+                    <h:panelGrid columns="1">
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Alta paciente"  action="expediente"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Citas" action="citas"/>
+                        <h:commandLink rendered="#{loginBean.contenidoDesbloqueado}" value="Recetas" action="recetas"/>
+                        <h:commandLink value="Ver Documentacion" action="documentos"/>
+                        <br/>
+                        <br/>
+                        <h:commandLink value="Configuracion" action="configuracion"/>
+                        <br/>
+                        <br/>
+                        <h:commandLink value="Cerrar Sesion" action="salir"/>
+                    </h:panelGrid>
+                </h:form>  
+            </p:layoutUnit>  
+
+
+            <p:layoutUnit position="center">
+                <h:form style="background-color:#ccfaf9">
+                    <p:panel header="Cambiar Password">
+                        <h:panelGrid columns="2" >
+                            <h:outputText value="Nuevo Password :"/>
+                            <p:password maxlength="10" value="#{configuracionUsuario.password}"/>
+                            <h:outputText value="Repetir Nuevo Password :"/>
+                            <p:password maxlength="10" value="#{configuracionUsuario.repPassword}"/>
+                            <h:commandButton value="Cambiar Password" action="#{configuracionUsuario.guardarPassword}"/>
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:panel header="Cambiar Tema">
+                        <h:panelGrid columns="3">
+                            <h:outputText value="Tema :"/>
+                            <p:selectOneMenu value="#{configuracionUsuario.theme}">
+                                <f:selectItem itemValue="cupertino" itemLabel="Tema 1"/>
+                                <f:selectItem itemValue="hot-sneaks" itemLabel="Tema 2"/>
+                                <f:selectItem itemValue="black-tie" itemLabel="Tema 3"/>
+
+                                <f:selectItem itemValue="blitzer" itemLabel="Tema 4"/>
+
+                                <f:selectItem itemValue="dot-luv" itemLabel="Tema 5"/>
+
+                                <f:selectItem itemValue="excite-bike" itemLabel="Tema 6"/>
+
+                                <f:selectItem itemValue="le-frog" itemLabel="Tema 7"/>
+
+                                <f:selectItem itemValue="trontastic" itemLabel="Tema 8"/>
+                            </p:selectOneMenu>
+
+                            <h:commandButton value="Cambiar Tema" action="#{configuracionUsuario.guardarTema}"/>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </p:layoutUnit>  
+
+        </p:layout>  
+    </h:body>
+</html>

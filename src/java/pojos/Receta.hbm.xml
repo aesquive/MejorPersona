@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 16/06/2012 12:08:16 AM by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 25/06/2012 06:37:11 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="pojos.Receta" table="receta" catalog="mejorpersona">
         <id name="idReceta" type="java.lang.Integer">
@@ -15,7 +15,7 @@
             <column name="IdPaciente" />
         </many-to-one>
         <property name="contenido" type="string">
-            <column name="Contenido" />
+            <column name="Contenido" length="1000" />
         </property>
         <property name="fecha" type="date">
             <column name="Fecha" length="10" />

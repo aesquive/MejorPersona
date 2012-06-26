@@ -38,7 +38,7 @@
 
 <context-param>  
     <param-name>primefaces.THEME</param-name>  
-    <param-value>hot-sneaks</param-value>  
+    <param-value>#{loginBean.theme}</param-value>  
 </context-param>
 
 </web-app>

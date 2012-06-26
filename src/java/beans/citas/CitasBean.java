@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import mail.EnviadorCorreos;
-import org.hibernate.criterion.Restrictions;
 import pojos.Cita;
 import pojos.DatosDoctor;
 import pojos.DatosPaciente;
@@ -28,11 +27,13 @@ public class CitasBean {
     private Dao dao;
     private Cita cita;
     private int idSeleccionado;
+    private LoginBean loginBean;
 
     /**
      * Creates a new instance of CitasBean
      */
     public CitasBean() {
+        this.loginBean = (LoginBean) Bean.getBean("loginBean");
         dao = new Dao();
         pacientes = dao.getTabla(DatosPaciente.class);
         Collections.sort(pacientes);
@@ -68,17 +69,11 @@ public class CitasBean {
     }
 
     public String guardar() {
-        System.out.println("guardando");
-        System.out.println("el id =" + idSeleccionado);
-        System.out.println("la fecha inicio " + cita.getFechaInicial());
-        System.out.println("fecha final " + cita.getFechaFinal());
-        System.out.println("descr " + cita.getDesCita());
-        DatosDoctor datosDoctor = ((LoginBean) Bean.getBean("loginBean")).getDatosDoctor();
-        restarHoraCitas(Integer.parseInt(Configurador.getCfg("horasDif")) , dao.getTabla(Cita.class));
+        DatosDoctor datosDoctor = loginBean.getDatosDoctor();
         guardarCita(datosDoctor);
-        AgendaBean bean = (AgendaBean) Bean.getBean("agendaBean");
-        bean.agregarCita(dao.queryCriterion(Cita.class, Restrictions.eq("datosDoctor",datosDoctor)));
         enviarCorreo();
+        loginBean.setMostrarMensaje(true);
+        loginBean.setMensaje("La cita se ha guardado exitosamente");
         return "citas";
     }
 
@@ -111,34 +106,32 @@ public class CitasBean {
     }
 
     private void guardarCita(DatosDoctor datosDoctor) {
-        cita.setDatosDoctor(datosDoctor);
-        cita.setDatosPaciente(dao.getPaciente(idSeleccionado));
-        dao.guardarActualizar(getCita());
+        int horasDif = Integer.parseInt(Configurador.getCfg("horasDif"));
+        if (cita.getFechaInicial() != null && cita.getFechaFinal() != null) {
 
-    }
+            Date fechaInicial = cita.getFechaInicial();
+            Date fechaFinal = cita.getFechaFinal();
+            fechaInicial.setHours(fechaInicial.getHours() + horasDif);
+            fechaFinal.setHours(fechaFinal.getHours() + horasDif);
+            cita.setDatosDoctor(datosDoctor);
+            cita.setDatosPaciente(dao.getPaciente(idSeleccionado));
 
-    private void restarHoraCitas(int horas, List<Cita> tabla) {
-        for(Cita c:tabla){
-            Date ini=c.getFechaInicial();
-            ini.setHours(ini.getHours()-horas);
-            Date fin=c.getFechaFinal();
-            fin.setHours(fin.getHours()-horas);
-            c.setFechaInicial(ini);
-            c.setFechaFinal(fin);
-            dao.guardarActualizar(c);
+            dao.guardarActualizar(getCita());
+            return;
         }
+        loginBean.setMensaje("Debe definirse fecha final y fecha inicial");
     }
 
     private void enviarCorreo() {
-        String[] mensaje=formarMensaje();
-        EnviadorCorreos enviador=new EnviadorCorreos(Configurador.getCfg("enviadorCorreoSmtp"), Configurador.getCfg("enviadorCorreoRemitente"), Configurador.getCfg("enviadorCorreoPassword"),Configurador.getCfg("enviadorCorreoPuerto"));
-        enviador.enviar(new String[]{cita.getDatosPaciente().getCorreo()},"CITA",mensaje);
+        String[] mensaje = formarMensaje();
+        EnviadorCorreos enviador = new EnviadorCorreos(Configurador.getCfg("enviadorCorreoSmtp"), Configurador.getCfg("enviadorCorreoRemitente"), Configurador.getCfg("enviadorCorreoPassword"), Configurador.getCfg("enviadorCorreoPuerto"));
+        enviador.enviar(new String[]{cita.getDatosPaciente().getCorreo()}, "CITA", mensaje);
     }
 
     private String[] formarMensaje() {
-        String saludo="Estimado(a) "+cita.getDatosPaciente().getNom()+" "+cita.getDatosPaciente().getApePat();
-        String cuerpo="Recordando su cita el dia "+Funciones.DateToString(cita.getFechaInicial())+" a las "+Funciones.sacarHorario(cita.getFechaInicial());
-        String despedida="Saludos";
-        return new String[]{saludo,cuerpo,despedida};
+        String saludo = "Estimado(a) " + cita.getDatosPaciente().getNom() + " " + cita.getDatosPaciente().getApePat();
+        String cuerpo = "Recordando su cita el dia " + Funciones.DateToString(cita.getFechaInicial()) + " a las " + Funciones.sacarHorario(cita.getFechaInicial());
+        String despedida = "Saludos";
+        return new String[]{saludo, cuerpo, despedida};
     }
 }

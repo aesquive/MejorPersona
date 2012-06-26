@@ -15,7 +15,7 @@
                 monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
                 dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
                 dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-                dayNamesMin: ['D','L','M','X','J','V','S'],
+                dayNamesMin: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
                 weekHeader: 'Semana',
                 firstDay: 1,
                 isRTL: false,
@@ -24,8 +24,8 @@
                 timeOnlyTitle: 'Sólo hora',
                 timeText: 'Tiempo',
                 hourText: 'Hora',
-                minuteText: 'Minuto',
-                secondText: 'Segundo',
+                minuteText: 'Minutos',
+                secondText: 'Segundos',
                 currentText: 'Fecha actual',
                 ampm: false,
                 month: 'Mes',
@@ -40,6 +40,8 @@
         
         <p:layout fullPage="true">  
 
+            <p:layoutUnit rendered="#{loginBean.mostrarMensaje}" position="north" size="40" header="#{loginBean.mensaje}" resizable="false" closable="false" collapsible="false">  
+            </p:layoutUnit>
 
             <p:layoutUnit position="south" size="28"  resizable="false" closable="false" collapsible="false">  
                 <h:outputText style="font-size: smaller" value="Hecho por Alberto Emmanuel Esquivel Vega 02/05/2012." />  
@@ -56,6 +58,9 @@
                         <br/>
                         <br/>
                         <br/>
+                        <h:commandLink value="Configuracion" action="configuracion"/>
+                        <br/>
+                        <br/>
                         <h:commandLink value="Cerrar Sesion" action="salir"/>
                     </h:panelGrid>
                 </h:form>  
@@ -64,8 +69,7 @@
             <p:layoutUnit position="center">  
                 <h:form>    
                     <center>
-                        <h:panelGrid columns="3">
-                            <h:graphicImage  width="50px"   height="50px" url="#{configuracionBean.rutaWeb}imagenes#{configuracionBean.delimitador}LogoMejorPersonaSinRefl.png"/>
+                        <h:panelGrid columns="2">
                             <h:outputText value="Expediente Clinico"/>
                             <h:graphicImage width="50px" height="50px"  url="#{configuracionBean.rutaWeb}imagenes#{configuracionBean.delimitador}LogoMejorPersonaSin.png"/>
                         </h:panelGrid>
@@ -87,7 +91,7 @@
                                             <h:outputText value="Segundo Nombre"/>
                                             <p:inputText onkeyup="soloLetras(this)"  value="#{expedienteBean.datosPaciente.segNom}"/>
                                             <h:outputText value="Fecha de Nacimiento"/>
-                                            <p:calendar showOn="button" locale="es" id="fecNac" navigator="true" title="Dar click en el boton para ver calendario" value="#{expedienteBean.datosPaciente.fecnac}"/>
+                                            <p:calendar showOn="button" yearRange="c-100:c+1"  locale="es" id="fecNac" navigator="true" title="Dar click en el boton para ver calendario" value="#{expedienteBean.datosPaciente.fecNac}"/>
                                         </h:panelGrid>
 
                                     </p:column>
@@ -138,7 +142,7 @@
                                     <p:inputText onkeyup="soloNumerosYPunto(this)" value="#{expedienteBean.expedienteDatos.talla}"/>
                                     <h:outputText value="m"/>
                                     <h:outputText value="Estructura Osea"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteDatos.estructuraOsea}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteDatos.estructuraOsea}">
                                         <f:selectItem itemLabel="Chica" itemValue="Chica"/>
                                         <f:selectItem itemLabel="Mediana" itemValue="Mediana"/>
                                         <f:selectItem itemLabel="Grande" itemValue="Grande"/>
@@ -172,98 +176,98 @@
                                     <h:outputText style="font-weight: bold" value="Papa"/>
                                     <h:outputText style="font-weight: bold" value="Paciente"/>
                                     <h:outputText value="Obesidad"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.obeMama}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.obeMama}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.obePapa}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.obePapa}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.obePac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.obePac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
                                     <h:outputText value="Diabetes"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.diaMama}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.diaMama}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.diaPapa}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.diaPapa}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.diaPac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.diaPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
                                     <h:outputText value="Hipertension"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.hipMama}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.hipMama}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.hipPapa}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.hipPapa}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.hipPac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.hipPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
                                     <h:outputText value="Trigliceridos"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.triMama}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.triMama}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.triPapa}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.triPapa}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.triPac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.triPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
 
                                     <h:outputText value="Colesterol"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.colMama}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.colMama}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.colPapa}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.colPapa}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.colPac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.colPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
 
 
                                     <h:outputText value="Alergias"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.aleMama}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.aleMama}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.alePapa}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.alePapa}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.alePac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.alePac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
 
 
                                     <h:outputText value="Tabaquismo"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.tabMama}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.tabMama}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.tabPapa}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.tabPapa}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.tabPac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.tabPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
@@ -271,45 +275,45 @@
 
 
                                     <h:outputText value="Alcoholismo"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.alcMama}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.alcMama}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.alcPapa}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.alcPapa}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.alcPac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.alcPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
 
 
                                     <h:outputText value="Transtornos Menstruales"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.mensMama}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.mensMama}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.mensPapa}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.mensPapa}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.mensPac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.mensPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
 
 
                                     <h:outputText value="Problemas Cardiacos"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.cardMama}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.cardMama}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.cardPapa}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.cardPapa}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.cardPac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.cardPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
@@ -322,7 +326,7 @@
                                     <h:outputText style="font-weight: bold" value="Padecimiento"/>
                                     <h:outputText style="font-weight: bold" value="Paciente"/>
                                     <h:outputText value="Estrenimiento"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.estrePac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.estrePac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
@@ -330,12 +334,12 @@
                                         <h:outputText value="Retencion de Liquidos"/>
                                         <h:outputText value="Edema de miembros Inferiores"/>    
                                     </h:panelGrid>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.retLiqPac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.retLiqPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
                                     <h:outputText value="Varices"/>
-                                    <p:selectOneMenu value="#{expedienteBean.expedienteMatriz.varPac}">
+                                    <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteMatriz.varPac}">
                                         <f:selectItem itemLabel="Si" itemValue="Si"/>
                                         <f:selectItem itemLabel="No" itemValue="No"/>
                                     </p:selectOneMenu>
@@ -358,7 +362,7 @@
                                             <h:outputText value="Lugar"/>
                                             <p:inputText onkeyup="pasarMayusculas(this)" value="#{expedienteBean.expedienteComidas.lugDesayuno}"/>
                                             <h:outputText value="Come Solo : "/>
-                                            <p:selectOneMenu value="#{expedienteBean.expedienteComidas.comeSoloDesayuno}">
+                                            <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteComidas.comeSoloDesayuno}">
                                                 <f:selectItem itemLabel="Si" itemValue="Si"/>
                                                 <f:selectItem itemLabel="No" itemValue="No"/>
                                             </p:selectOneMenu>
@@ -386,7 +390,7 @@
                                             <h:outputText value="Lugar"/>
                                             <p:inputText onkeyup="pasarMayusculas(this)" value="#{expedienteBean.expedienteComidas.lugComida}"/>
                                             <h:outputText value="Come Solo : "/>
-                                            <p:selectOneMenu value="#{expedienteBean.expedienteComidas.comeSoloComida}">
+                                            <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteComidas.comeSoloComida}">
                                                 <f:selectItem itemLabel="Si" itemValue="Si"/>
                                                 <f:selectItem itemLabel="No" itemValue="No"/>
                                             </p:selectOneMenu>
@@ -414,7 +418,7 @@
                                             <h:outputText value="Lugar"/>
                                             <p:inputText onkeyup="pasarMayusculas(this)" value="#{expedienteBean.expedienteComidas.lugCena}"/>
                                             <h:outputText value="Come Solo : "/>
-                                            <p:selectOneMenu value="#{expedienteBean.expedienteComidas.comeSoloCena}">
+                                            <p:selectOneMenu style="width: 50%" value="#{expedienteBean.expedienteComidas.comeSoloCena}">
                                                 <f:selectItem itemLabel="Si" itemValue="Si"/>
                                                 <f:selectItem itemLabel="No" itemValue="No"/>
                                             </p:selectOneMenu>

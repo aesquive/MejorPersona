@@ -9,6 +9,8 @@ import configuradores.Configurador;
 import documentadores.expedientes.GeneradorExpedientes;
 import guardadores.GuardadorExpediente;
 import java.util.Calendar;
+import java.util.Date;
+import mail.EnviadorCorreos;
 import org.primefaces.event.CaptureEvent;
 import org.primefaces.event.FlowEvent;
 import pojos.DatosPaciente;
@@ -35,7 +37,10 @@ public class ExpedienteBean {
     private int hrsCena;
     private int minsCena;
     
+    private Date fechaMinima;
+    
     public ExpedienteBean() {
+        ponerFechaMinima();
         this.hrsDesayuno=12;
         this.hrsComida=12;
         this.hrsCena=12;
@@ -94,11 +99,13 @@ public class ExpedienteBean {
     
     public String guardar(){
         generarClavePaciente();
+        datosPaciente.setTema("cupertino");
         inyectarPaciente();
         ponerHorasComidas();
         GuardadorExpediente guardador=new GuardadorExpediente(this.datosPaciente,this.expedienteComidas,this.expedienteDatos,this.expedienteMatriz);
         guardador.guardar();
         ponerBeanVista();
+        enviarCorreo(datosPaciente);
         return "vista";
     }
 
@@ -227,10 +234,52 @@ public class ExpedienteBean {
         String terc=nom.substring(0, 1)+nom.substring(nom.length()-1,nom.length());
         String usuario=primeras+segundas+terc;
         datosPaciente.setUsuario(usuario.toUpperCase());
+        datosPaciente.setPassword(usuario.toUpperCase());
+        
     }
     
-    public static void main(String[] args) {
-        String cad="cad";
-        System.out.println(cad.substring(cad.length()-1, cad.length()));
+    /**
+     * @return the fechaMinima
+     */
+    public Date getFechaMinima() {
+        return fechaMinima;
     }
+
+    /**
+     * @param fechaMinima the fechaMinima to set
+     */
+    public void setFechaMinima(Date fechaMinima) {
+        this.fechaMinima = fechaMinima;
+    }
+
+    private void ponerFechaMinima() {
+        Calendar instance = Calendar.getInstance();
+        instance.set(Calendar.YEAR, instance.get(Calendar.YEAR)-90);
+        System.out.println(instance.get(Calendar.YEAR));
+        fechaMinima=instance.getTime();
+    }
+
+
+    public static void main(String[] args) {
+        Calendar instance = Calendar.getInstance();
+        instance.set(Calendar.YEAR, instance.get(Calendar.YEAR)-100);
+        System.out.println(instance.get(Calendar.YEAR));
+    }
+
+    private void enviarCorreo(DatosPaciente datosPaciente) {
+        String[] mensaje = formarMensaje(datosPaciente);
+        EnviadorCorreos enviador = new EnviadorCorreos(Configurador.getCfg("enviadorCorreoSmtp"), Configurador.getCfg("enviadorCorreoRemitente"), Configurador.getCfg("enviadorCorreoPassword"), Configurador.getCfg("enviadorCorreoPuerto"));
+        enviador.enviar(new String[]{datosPaciente.getCorreo()}, "BIENVENIDO A MEJOR PERSONA", mensaje);
+    }
+
+    private String[] formarMensaje(DatosPaciente datosPaciente) {
+        String saludo = "Estimado(a) " + datosPaciente.getNom() + " " + datosPaciente.getApePat();
+        String cuerpo = "Agradeciendo su preferencia e informandole que desde este momento usted tiene acceso a toda su informacion ";
+        String cuerpo2="a traves de la pagina de internet con los siguientes datos";
+        String cuerpo3="Usuario:"+datosPaciente.getUsuario();
+        String cuerpo4="Password:"+datosPaciente.getPassword();
+        String despedida = "Saludos";
+        return new String[]{saludo, cuerpo+cuerpo2,cuerpo3,cuerpo4, despedida};
+    }
+
 }
