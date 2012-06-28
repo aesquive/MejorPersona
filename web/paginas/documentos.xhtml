@@ -52,7 +52,7 @@
 
 
 
-                        <h:outputText value="Tipo de Receta:"/>
+                        <h:outputText value="Tipo de Documento:"/>
                         <p:selectOneMenu id="comboRecetas"  required="true" value="#{informacionPacienteBean.rutaPdfActual}">
                             <f:selectItem itemValue="#{null}" itemLabel="--Seleccione--"/>
                             <f:selectItems value="#{informacionPacienteBean.archivos}" var="tipRec" itemLabel="#{tipRec.x}" itemValue="#{tipRec.y}"/>

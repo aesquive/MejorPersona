@@ -58,7 +58,7 @@ public class GeneradorRecetas {
             for (String s : texto) {
                 Paragraph parrafo = generarParrafo(s);
                 ColumnText.showTextAligned(stamper.getOverContent(1), Element.ALIGN_LEFT, parrafo, posX, posActualY, 0);
-                posActualY-=12;
+                posActualY-=10;
             }
             stamper.close();
             reader.close();
@@ -72,7 +72,7 @@ public class GeneradorRecetas {
     }
 
     public static void main(String[] args) {
-        GeneradorRecetas gen = new GeneradorRecetas("1.pdf", "recetasChuy1.pdf");
+        GeneradorRecetas gen = new GeneradorRecetas("1.pdf", "recetaCarbohidratos.pdf");
         List<String> lista=new LinkedList<String>();
         lista.add("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         lista.add("adiossssssssssssssssssssss");
@@ -86,7 +86,7 @@ public class GeneradorRecetas {
     }
 
     private Paragraph generarParrafo(String texto) {
-        Paragraph p = new Paragraph(texto, new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL));
+        Paragraph p = new Paragraph(texto, new Font(Font.FontFamily.TIMES_ROMAN, 9, Font.NORMAL));
 
         return p;
     }

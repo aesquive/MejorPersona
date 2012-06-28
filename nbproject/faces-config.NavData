@@ -8,7 +8,7 @@
         <Node id="paginas/vista.xhtml" x="150" y="150" zoom="true"/>
         <Node id="paginas/expediente.xhtml" x="376" y="261" zoom="true"/>
         <Node id="paginas/citas.xhtml" x="666" y="229" zoom="true"/>
-        <Node id="paginas/configuracion.xhtml" x="910" y="136" zoom="true"/>
+        <Node id="paginas/configuracion.xhtml" x="892" y="120" zoom="true"/>
         <Node id="paginas/documentos.xhtml" x="62" y="251" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
